@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="72%">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#EBEFF5"/>
+    </radialGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBFCFD"/><stop offset=".45" stop-color="#D6DBE3"/><stop offset="1" stop-color="#A7B0BE"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B4089"/><stop offset="1" stop-color="#181B45"/>
+    </linearGradient>
+    <linearGradient id="bodyD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2B2F36"/><stop offset="1" stop-color="#13151A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+
+  <ellipse cx="200" cy="272.0" rx="132" ry="14" fill="#0B0D16" opacity=".08"/>
+  <rect x="60" y="144" width="280" height="110" rx="10" fill="url(#silver)" opacity=".55"/>
+  <rect x="76" y="158" width="248" height="84" rx="7" fill="url(#body)"/>
+  <rect x="77.1" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="85.4" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="93.6" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="101.9" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="110.2" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="118.4" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="126.7" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="135.0" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="143.2" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="151.5" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="159.8" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="168.0" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="176.3" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="184.6" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="192.8" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="201.1" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="209.4" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="217.6" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="225.9" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="234.2" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="242.4" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="250.7" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="259.0" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="267.2" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="275.5" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="283.8" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="292.0" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="300.3" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="308.6" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/><rect x="316.8" y="168.0" width="6.1" height="26" rx="1.6" fill="url(#silver)"/>
+  <rect x="76" y="220" width="248" height="22" rx="7" fill="#0E1030" opacity=".55"/>
+  <rect x="76" y="158" width="248" height="84" rx="7" fill="none" stroke="#0B0D16" stroke-opacity=".26"/>
+  <text x="200" y="356" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#59616E" letter-spacing="2.4">30P</text>
+</svg>

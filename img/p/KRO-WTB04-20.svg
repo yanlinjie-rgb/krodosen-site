@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="72%">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#EBEFF5"/>
+    </radialGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBFCFD"/><stop offset=".45" stop-color="#D6DBE3"/><stop offset="1" stop-color="#A7B0BE"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B4089"/><stop offset="1" stop-color="#181B45"/>
+    </linearGradient>
+    <linearGradient id="bodyD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2B2F36"/><stop offset="1" stop-color="#13151A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+
+  <ellipse cx="200" cy="272.0" rx="132" ry="14" fill="#0B0D16" opacity=".08"/>
+  <rect x="60" y="144" width="280" height="110" rx="10" fill="url(#silver)" opacity=".55"/>
+  <rect x="76" y="158" width="248" height="84" rx="7" fill="url(#body)"/>
+  <rect x="97.0" y="168.0" width="20.0" height="26" rx="3.0" fill="url(#silver)"/><rect x="159.0" y="168.0" width="20.0" height="26" rx="3.0" fill="url(#silver)"/><rect x="221.0" y="168.0" width="20.0" height="26" rx="3.0" fill="url(#silver)"/><rect x="283.0" y="168.0" width="20.0" height="26" rx="3.0" fill="url(#silver)"/>
+  <rect x="76" y="220" width="248" height="22" rx="7" fill="#0E1030" opacity=".55"/>
+  <rect x="76" y="158" width="248" height="84" rx="7" fill="none" stroke="#0B0D16" stroke-opacity=".26"/>
+  <text x="200" y="356" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="15" fill="#59616E" letter-spacing="2.4">4P</text>
+</svg>

@@ -1,0 +1,107 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Length 4730 >>
+stream
+0.086 0.094 0.247 rg 0 754 595 88 re f
+BT /F2 16 Tf 1.000 1.000 1.000 rg 1 0 0 1 44 802 Tm (KRODOSEN) Tj ET
+BT /F1 7.5 Tf 0.780 0.810 0.860 rg 1 0 0 1 44 784 Tm (ELECTRONIC COMPONENTS) Tj ET
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 424 798 Tm (PRODUCT DATASHEET) Tj ET
+0.909 0.314 0.122 rg 424 786.6 127 1.4 re f
+BT /F2 21 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 708 Tm (KRO-FPC30-05) Tj ET
+BT /F1 10.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 685 Tm (FPC / FFC · 30 pos · 0.5 mm · ZIF) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 656 Tm (CATEGORY) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 44 642 Tm (Industrial Connectors) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 204 656 Tm (PACKAGE) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 204 642 Tm (30P) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 344 656 Tm (STATUS) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 344 642 Tm (In stock) Tj ET
+0.086 0.094 0.247 RG 1 w 44 626 m 551 626 l S
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 602 Tm (SPECIFICATIONS) Tj ET
+0.909 0.314 0.122 rg 44 594 28 2 re f
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 578 Tm (Pitch) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 578 Tm (0.5 mm) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 571 m 551 571 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 557 Tm (Positions) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 557 Tm (30) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 550 m 551 550 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 536 Tm (Current rating) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 536 Tm (0.5 A / contact) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 529 m 551 529 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 515 Tm (Voltage rating) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 515 Tm (50 V AC/DC) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 508 m 551 508 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 494 Tm (Contact type) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 494 Tm (ZIF, top contact) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 487 m 551 487 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 473 Tm (Mated height) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 473 Tm (2.0 mm) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 466 m 551 466 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 452 Tm (Mating cycles) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 452 Tm (20) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 445 m 551 445 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 431 Tm (Contact plating) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 431 Tm (Sn over Ni) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 424 m 551 424 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 410 Tm (Operating temperature) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 410 Tm (-40 to +85 °C) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 403 m 551 403 l S
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 371 Tm (KEY FEATURES) Tj ET
+0.909 0.314 0.122 rg 44 363 28 2 re f
+0.909 0.314 0.122 rg 45 350.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 349 Tm (0.5 mm to 2.54 mm pitch fine-pitch designs) Tj ET
+0.909 0.314 0.122 rg 45 334.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 333 Tm (Rated for 500 mating cycles minimum on board-to-board) Tj ET
+0.909 0.314 0.122 rg 45 318.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 317 Tm (IP67 sealing when mated \(circular series\)) Tj ET
+0.909 0.314 0.122 rg 45 302.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 301 Tm (Selective gold plating on contact areas) Tj ET
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 269 Tm (APPLICATIONS) Tj ET
+0.909 0.314 0.122 rg 44 261 28 2 re f
+0.086 0.094 0.247 rg 45 248.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 247 Tm (Automotive wiring harnesses) Tj ET
+0.086 0.094 0.247 rg 45 232.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 231 Tm (Industrial automation and robotics) Tj ET
+0.086 0.094 0.247 rg 45 216.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 215 Tm (Display and camera FPC routing) Tj ET
+0.086 0.094 0.247 rg 45 200.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 199 Tm (Outdoor and harsh-environment equipment) Tj ET
+0.898 0.914 0.941 RG 0.8 w 44 100 m 551 100 l S
+BT /F2 8 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 82 Tm (KRODOSEN Co., Ltd.) Tj ET
+BT /F1 7.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 140 82 Tm (6F, Hanssem SangAm, 188 Seongam-ro, Mapo-gu, Seoul, Republic of Korea) Tj ET
+BT /F1 7.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 70 Tm (T. +82 2 3152 7090~4    F. +82 2 3152 7095    E. klein@krodosen.com    www.krodosen.com) Tj ET
+BT /F1 6.8 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 56 Tm (PRELIMINARY DATA  -  KRODOSEN reserves the right to change specifications without notice.  \(c\) KRODOSEN Co., Ltd. All rights reserved.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Title (KRO-FPC30-05 datasheet) /Author (KRODOSEN Co., Ltd.) /Subject (FPC / FFC · 30 pos · 0.5 mm · ZIF / 30P) /Creator (KRODOSEN Product Catalogue) /Producer (KRODOSEN) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000348 00000 n 
+0000000450 00000 n 
+0000005232 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+5424
+%%EOF

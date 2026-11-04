@@ -216,6 +216,62 @@
     y.forEach(function (el) { el.textContent = new Date().getFullYear(); });
   }
 
+  /* ---------------- image lightbox（站内所有 [data-zoom] 通用） ---------------- */
+  function ensureLightbox() {
+    var box = document.getElementById('krdLbox');
+    if (box) return box;
+    box = document.createElement('div');
+    box.id = 'krdLbox';
+    box.className = 'lbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.innerHTML =
+      '<figure class="lbox__fig">' +
+        '<button type="button" class="lbox__x" aria-label="Close">&times;</button>' +
+        '<img src="" alt="">' +
+        '<figcaption class="lbox__cap"></figcaption>' +
+      '</figure>';
+    document.body.appendChild(box);
+    box.addEventListener('click', function (e) {
+      if (e.target === box || (e.target.classList && e.target.classList.contains('lbox__x'))) closeLightbox();
+    });
+    return box;
+  }
+
+  function openLightbox(src, alt) {
+    if (!src) return;
+    var box = ensureLightbox();
+    var img = box.querySelector('img');
+    img.src = src;
+    img.alt = alt || '';
+    box.querySelector('.lbox__cap').textContent = alt || '';
+    box.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    var box = document.getElementById('krdLbox');
+    if (!box) return;
+    box.classList.remove('is-open');
+    box.querySelector('img').src = '';
+    document.body.style.overflow = '';
+  }
+
+  function initLightbox() {
+    ensureLightbox(); // 预创建，避免首次点击闪烁
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest ? e.target.closest('[data-zoom]') : null;
+      if (!trigger) return;
+      var src = trigger.getAttribute('data-zoom');
+      if (!src) return;
+      e.preventDefault();
+      openLightbox(src, trigger.getAttribute('data-zoom-alt') || '');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
   /* ---------------- boot ---------------- */
   function boot() {
     applyLang(currentLang());
@@ -226,6 +282,7 @@
     initProducts();
     initForm();
     initMisc();
+    initLightbox();
   }
 
   if (document.readyState === 'loading') {

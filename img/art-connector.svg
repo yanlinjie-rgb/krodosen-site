@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <defs>
+    <linearGradient id="kBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2F3382"/><stop offset="1" stop-color="#15173A"/>
+    </linearGradient>
+    <linearGradient id="kPin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F2F5F9"/><stop offset=".55" stop-color="#CBD2DC"/>
+      <stop offset="1" stop-color="#A7B0BF"/>
+    </linearGradient>
+    <pattern id="kDots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.4" cy="1.4" r="1.4" fill="#D9DDE4"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="480" fill="url(#kDots)" opacity=".55"/>
+
+  <!-- mating cable hint -->
+  <g stroke="#C6CCD6" stroke-width="1.4" fill="none">
+    <path d="M520 244 h56 q18 0 18 18 v0"/>
+    <path d="M520 292 h56 q18 0 18 -18"/>
+  </g>
+
+  <!-- connector housing -->
+  <g>
+    <rect x="150" y="150" width="360" height="220" rx="8" fill="url(#kBody)"/>
+    <rect x="150" y="150" width="360" height="220" rx="8" fill="none" stroke="#0F1130" stroke-opacity=".3"/>
+    <!-- shroud opening -->
+    <rect x="196" y="196" width="278" height="128" rx="4" fill="#0F1130"/>
+    <rect x="196" y="196" width="278" height="128" rx="4" fill="none" stroke="#454B9C" stroke-width="1"/>
+    <!-- pin field 2 x 5 -->
+    <g fill="url(#kPin)">
+      <rect x="214" y="212" width="34" height="34" rx="2"/><rect x="262" y="212" width="34" height="34" rx="2"/>
+      <rect x="310" y="212" width="34" height="34" rx="2"/><rect x="358" y="212" width="34" height="34" rx="2"/>
+      <rect x="406" y="212" width="34" height="34" rx="2"/>
+      <rect x="214" y="264" width="34" height="34" rx="2"/><rect x="262" y="264" width="34" height="34" rx="2"/>
+      <rect x="310" y="264" width="34" height="34" rx="2"/><rect x="358" y="264" width="34" height="34" rx="2"/>
+      <rect x="406" y="264" width="34" height="34" rx="2"/>
+    </g>
+    <!-- polarity key -->
+    <path d="M196 330 l16 0 l0 10 z" fill="#E8501F"/>
+    <!-- locking latch -->
+    <rect x="150" y="352" width="360" height="18" rx="4" fill="#1B1E4A"/>
+    <!-- screws -->
+    <g fill="#B7BFCC">
+      <circle cx="172" cy="172" r="6"/><circle cx="488" cy="172" r="6"/>
+      <circle cx="172" cy="348" r="6"/><circle cx="488" cy="348" r="6"/>
+    </g>
+  </g>
+
+  <!-- pin 1 callout -->
+  <g stroke="#E8501F" stroke-width="1" fill="none">
+    <line x1="214" y1="212" x2="132" y2="150"/>
+    <circle cx="214" cy="212" r="2.5" fill="#E8501F" stroke="none"/>
+  </g>
+  <text x="64" y="140" font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#E8501F" letter-spacing="1">PIN 1</text>
+
+  <g fill="#1E2153" font-family="ui-monospace, Menlo, monospace" font-size="11" letter-spacing="1">
+    <text x="64" y="404">W I R E - T O - B O A R D</text>
+    <text x="64" y="422" fill="#6B7280">2.54 mm · 10 pos · 10 A · IP67</text>
+  </g>
+  <line x1="64" y1="386" x2="236" y2="386" stroke="#E8501F" stroke-width="1.5"/>
+</svg>

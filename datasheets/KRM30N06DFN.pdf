@@ -1,0 +1,104 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Length 4623 >>
+stream
+0.086 0.094 0.247 rg 0 754 595 88 re f
+BT /F2 16 Tf 1.000 1.000 1.000 rg 1 0 0 1 44 802 Tm (KRODOSEN) Tj ET
+BT /F1 7.5 Tf 0.780 0.810 0.860 rg 1 0 0 1 44 784 Tm (ELECTRONIC COMPONENTS) Tj ET
+BT /F2 9 Tf 1.000 1.000 1.000 rg 1 0 0 1 424 798 Tm (PRODUCT DATASHEET) Tj ET
+0.909 0.314 0.122 rg 424 786.6 127 1.4 re f
+BT /F2 21 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 708 Tm (KRM30N06DFN) Tj ET
+BT /F1 10.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 685 Tm (N-ch · 30 V · 6 A · RDS\(on\) 18 mohm) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 656 Tm (CATEGORY) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 44 642 Tm (Semiconductors & Chips) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 204 656 Tm (PACKAGE) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 204 642 Tm (DFN 5×6) Tj ET
+BT /F2 7 Tf 0.408 0.443 0.494 rg 1 0 0 1 344 656 Tm (STATUS) Tj ET
+BT /F1 9.5 Tf 0.145 0.165 0.212 rg 1 0 0 1 344 642 Tm (In stock) Tj ET
+0.086 0.094 0.247 RG 1 w 44 626 m 551 626 l S
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 602 Tm (SPECIFICATIONS) Tj ET
+0.909 0.314 0.122 rg 44 594 28 2 re f
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 578 Tm (Drain-source voltage) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 578 Tm (30 V) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 571 m 551 571 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 557 Tm (Continuous drain current) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 557 Tm (6 A \(Tc = 25 °C\)) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 550 m 551 550 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 536 Tm (RDS\(on\)) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 536 Tm (18 mohm @ VGS = 10 V) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 529 m 551 529 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 515 Tm (Gate threshold voltage) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 515 Tm (1.0 - 2.5 V) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 508 m 551 508 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 494 Tm (Total gate charge) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 494 Tm (6.8 nC) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 487 m 551 487 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 473 Tm (Input capacitance) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 473 Tm (520 pF) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 466 m 551 466 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 452 Tm (Junction temperature) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 452 Tm (-55 to +150 °C) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 445 m 551 445 l S
+BT /F1 9 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 431 Tm (Packaging) Tj ET
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 216 431 Tm (Tape & reel · 3,000 pcs) Tj ET
+0.898 0.914 0.941 RG 0.6 w 44 424 m 551 424 l S
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 392 Tm (KEY FEATURES) Tj ET
+0.909 0.314 0.122 rg 44 384 28 2 re f
+0.909 0.314 0.122 rg 45 371.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 370 Tm (Every wafer lot traceable to fab and assembly site) Tj ET
+0.909 0.314 0.122 rg 45 355.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 354 Tm (100% avalanche and final test on power devices) Tj ET
+0.909 0.314 0.122 rg 45 339.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 338 Tm (Low RDS\(on\) trench and shield-gate processes) Tj ET
+0.909 0.314 0.122 rg 45 323.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 322 Tm (Halogen-free, RoHS and REACH compliant) Tj ET
+BT /F2 9 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 290 Tm (APPLICATIONS) Tj ET
+0.909 0.314 0.122 rg 44 282 28 2 re f
+0.086 0.094 0.247 rg 45 269.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 268 Tm (Power conversion and motor drives) Tj ET
+0.086 0.094 0.247 rg 45 253.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 252 Tm (Portable device power management) Tj ET
+0.086 0.094 0.247 rg 45 237.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 236 Tm (Industrial communication interfaces) Tj ET
+0.086 0.094 0.247 rg 45 221.6 3.4 3.4 re f
+BT /F1 9 Tf 0.145 0.165 0.212 rg 1 0 0 1 56 220 Tm (Automotive lighting and body control) Tj ET
+0.898 0.914 0.941 RG 0.8 w 44 100 m 551 100 l S
+BT /F2 8 Tf 0.086 0.094 0.247 rg 1 0 0 1 44 82 Tm (KRODOSEN Co., Ltd.) Tj ET
+BT /F1 7.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 140 82 Tm (6F, Hanssem SangAm, 188 Seongam-ro, Mapo-gu, Seoul, Republic of Korea) Tj ET
+BT /F1 7.5 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 70 Tm (T. +82 2 3152 7090~4    F. +82 2 3152 7095    E. klein@krodosen.com    www.krodosen.com) Tj ET
+BT /F1 6.8 Tf 0.408 0.443 0.494 rg 1 0 0 1 44 56 Tm (PRELIMINARY DATA  -  KRODOSEN reserves the right to change specifications without notice.  \(c\) KRODOSEN Co., Ltd. All rights reserved.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Title (KRM30N06DFN datasheet) /Author (KRODOSEN Co., Ltd.) /Subject (N-ch · 30 V · 6 A · RDS\(on\) 18 mohm / DFN 5×6) /Creator (KRODOSEN Product Catalogue) /Producer (KRODOSEN) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000348 00000 n 
+0000000450 00000 n 
+0000005125 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+5324
+%%EOF

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <defs>
+    <linearGradient id="cBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2E3280"/><stop offset="1" stop-color="#141633"/>
+    </linearGradient>
+    <linearGradient id="cPin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F1F4F8"/><stop offset="1" stop-color="#B4BCCA"/>
+    </linearGradient>
+    <pattern id="cDots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.4" cy="1.4" r="1.4" fill="#D9DDE4"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="480" fill="url(#cDots)" opacity=".55"/>
+
+  <!-- traces -->
+  <g stroke="#C6CCD6" stroke-width="1.4" fill="none">
+    <path d="M320 96 V40 H180"/>
+    <path d="M320 96 H500 V150"/>
+    <path d="M196 240 H96 V330"/>
+    <path d="M444 240 H544 V180"/>
+    <path d="M320 384 V440 H470"/>
+  </g>
+  <g fill="#C6CCD6">
+    <circle cx="180" cy="40" r="3"/><circle cx="500" cy="150" r="3"/>
+    <circle cx="96" cy="330" r="3"/><circle cx="544" cy="180" r="3"/>
+    <circle cx="470" cy="440" r="3"/>
+  </g>
+
+  <!-- QFN package -->
+  <g>
+    <rect x="196" y="112" width="248" height="256" rx="10" fill="url(#cBody)"/>
+    <!-- pins : top / bottom -->
+    <g fill="url(#cPin)">
+      <rect x="212" y="96" width="14" height="18" rx="2"/>
+      <rect x="240" y="96" width="14" height="18" rx="2"/>
+      <rect x="268" y="96" width="14" height="18" rx="2"/>
+      <rect x="296" y="96" width="14" height="18" rx="2"/>
+      <rect x="324" y="96" width="14" height="18" rx="2"/>
+      <rect x="352" y="96" width="14" height="18" rx="2"/>
+      <rect x="380" y="96" width="14" height="18" rx="2"/>
+      <rect x="408" y="96" width="14" height="18" rx="2"/>
+      <rect x="212" y="366" width="14" height="18" rx="2"/>
+      <rect x="240" y="366" width="14" height="18" rx="2"/>
+      <rect x="268" y="366" width="14" height="18" rx="2"/>
+      <rect x="296" y="366" width="14" height="18" rx="2"/>
+      <rect x="324" y="366" width="14" height="18" rx="2"/>
+      <rect x="352" y="366" width="14" height="18" rx="2"/>
+      <rect x="380" y="366" width="14" height="18" rx="2"/>
+      <rect x="408" y="366" width="14" height="18" rx="2"/>
+    </g>
+    <!-- pins : left / right -->
+    <g fill="url(#cPin)">
+      <rect x="180" y="128" width="18" height="14" rx="2"/>
+      <rect x="180" y="156" width="18" height="14" rx="2"/>
+      <rect x="180" y="184" width="18" height="14" rx="2"/>
+      <rect x="180" y="212" width="18" height="14" rx="2"/>
+      <rect x="180" y="240" width="18" height="14" rx="2"/>
+      <rect x="180" y="268" width="18" height="14" rx="2"/>
+      <rect x="180" y="296" width="18" height="14" rx="2"/>
+      <rect x="180" y="324" width="18" height="14" rx="2"/>
+      <rect x="442" y="128" width="18" height="14" rx="2"/>
+      <rect x="442" y="156" width="18" height="14" rx="2"/>
+      <rect x="442" y="184" width="18" height="14" rx="2"/>
+      <rect x="442" y="212" width="18" height="14" rx="2"/>
+      <rect x="442" y="240" width="18" height="14" rx="2"/>
+      <rect x="442" y="268" width="18" height="14" rx="2"/>
+      <rect x="442" y="296" width="18" height="14" rx="2"/>
+      <rect x="442" y="324" width="18" height="14" rx="2"/>
+    </g>
+    <!-- die + marking -->
+    <rect x="240" y="156" width="160" height="168" rx="5" fill="#1E2260" stroke="#4B51A6" stroke-width="1"/>
+    <circle cx="258" cy="174" r="5" fill="#E8501F"/>
+    <g font-family="ui-monospace, Menlo, monospace" fill="#9BA4C6" font-size="10.5" letter-spacing="1.2">
+      <text x="258" y="240">KRD</text>
+      <text x="258" y="258" fill="#EEF1F8" font-size="12.5" letter-spacing="1.6">KRM30N06</text>
+      <text x="258" y="280" fill="#6E77A0">30V · 6A · DFN</text>
+      <text x="258" y="298" fill="#6E77A0">2626 LOT:A6</text>
+    </g>
+  </g>
+
+  <g fill="#1E2153" font-family="ui-monospace, Menlo, monospace" font-size="11" letter-spacing="1">
+    <text x="64" y="104">P O W E R   M O S F E T</text>
+    <text x="64" y="122" fill="#6B7280">DFN 5×6 · RDS(on) 18 mΩ</text>
+  </g>
+  <line x1="64" y1="86" x2="200" y2="86" stroke="#E8501F" stroke-width="1.5"/>
+</svg>

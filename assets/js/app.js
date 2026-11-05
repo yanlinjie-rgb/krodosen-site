@@ -203,9 +203,32 @@
         'Phone: ' + phone + '\n\n' +
         msg.value;
 
+      var payload = {
+        name: name.value.trim(),
+        company: company,
+        email: email.value.trim(),
+        phone: phone,
+        subject: subject,
+        message: msg.value.trim(),
+        lang: currentLang()
+      };
+
+      var S = window.KRD_STORE;
+      if (S && S.inquiries) {
+        S.inquiries.add(payload).then(function () {
+          form.reset();
+          note.textContent = dict['cd.f.sent'] || 'Thank you — your enquiry has been received. Our team will reply within one business day.';
+          setTimeout(function () { note.textContent = ''; note.className = 'formnote'; }, 9000);
+        }).catch(function () {
+          var href = 'mailto:klein@krodosen.com?subject=' + encodeURIComponent('[KRODOSEN] ' + subject) +
+            '&body=' + encodeURIComponent(body);
+          window.location.href = href;
+        });
+        return;
+      }
+
       var href = 'mailto:klein@krodosen.com?subject=' +
         encodeURIComponent('[KRODOSEN] ' + subject) + '&body=' + encodeURIComponent(body);
-
       setTimeout(function () { window.location.href = href; }, 700);
     });
   }
@@ -272,9 +295,34 @@
     });
   }
 
+  /* ---------------- CMS content overrides ---------------- */
+  function applyOverrides() {
+    var S = window.KRD_STORE;
+    if (!S) return;
+    var lang = currentLang();
+    S.content.all().then(function (all) {
+      Object.keys(all || {}).forEach(function (key) {
+        var rec = all[key] || {};
+        var v = lang === 'zh-Hant'
+          ? (rec.zhHant != null ? rec.zhHant : rec.value_zh)
+          : (rec.en != null ? rec.en : rec.value_en);
+        if (v == null || v === '') return;
+        document.querySelectorAll('[data-i18n-html="' + key + '"]').forEach(function (el) {
+          el.innerHTML = String(v).replace(/\n/g, '<br>');
+        });
+        document.querySelectorAll('[data-i18n="' + key + '"]').forEach(function (el) {
+          el.textContent = v;
+        });
+      });
+    }).catch(function () {});
+  }
+
+  document.addEventListener('krd:lang', applyOverrides);
+
   /* ---------------- boot ---------------- */
   function boot() {
     applyLang(currentLang());
+    applyOverrides();
     initHeader();
     initDrawer();
     initReveal();

@@ -528,6 +528,8 @@ li{ list-style:none; }
   border:1px solid var(--line);
 }
 .pill--ok{ background:#F0F9F1; color:#2C7A3C; border-color:#D3EBD7; }
+.pill--build{ background:#FFF8EC; color:#9A6B12; border-color:#F3E0BC; }
+.pill--eol{ background:#F5F5F7; color:#8A8F9E; border-color:#E2E3E9; }
 .dl{
   display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600;
   color:var(--navy); border-bottom:1px solid var(--line); padding-bottom:2px; transition:.25s;
@@ -1110,3 +1112,25 @@ li{ list-style:none; }
 }
 /* hidden 属性优先于 display 声明（修复 .modal/.pager 等覆盖 hidden 的问题） */
 [hidden]{display:none !important;}
+
+
+/* ---------- article page ---------- */
+.artwrap{ max-width:760px; margin:0 auto; }
+.artmeta{ display:flex; align-items:center; gap:16px; padding-bottom:22px; border-bottom:1px solid var(--line); }
+.artmeta time{ font-size:12.5px; letter-spacing:.06em; color:var(--muted-2); font-variant-numeric:tabular-nums; }
+.artmeta__cat{
+  font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  color:var(--burst); border:1px solid var(--line); padding:3px 9px;
+}
+.artbody{ padding-top:34px; }
+.artbody p{ font-size:15.5px; line-height:1.95; color:var(--ink-2); margin:0 0 22px; }
+.artbody h2{ font-size:21px; line-height:1.4; color:var(--navy); margin:38px 0 16px; letter-spacing:-.01em; }
+.artbody h3{ font-size:17px; line-height:1.45; color:var(--navy); margin:30px 0 12px; }
+.artbody ul{ margin:0 0 22px; padding-left:20px; }
+.artbody li{ font-size:15px; line-height:1.9; color:var(--ink-2); margin-bottom:8px; }
+.artbody blockquote{
+  margin:26px 0; padding:2px 0 2px 22px; border-left:3px solid var(--gold);
+  font-size:15.5px; line-height:1.85; color:var(--ink);
+}
+.artback{ margin-top:44px; padding-top:26px; border-top:1px solid var(--line); }
+[data-news] .newsrow:hover{ background:var(--paper-2); }

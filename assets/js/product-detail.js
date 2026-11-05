@@ -10,6 +10,14 @@
   var DICT = window.KRD_I18N || {};
   var LIST = window.KRD_PRODUCTS || [];
 
+  /* merge products managed in the admin console (local mode) */
+  try {
+    if (window.KRD_STORE && window.KRD_STORE.products && window.KRD_STORE.products.sync) {
+      var live = window.KRD_STORE.products.sync();
+      if (live && live.length) LIST = live;
+    }
+  } catch (e) {}
+
   /* ---------------- helpers ---------------- */
   function currentLang() {
     var q = new URLSearchParams(location.search).get('lang');

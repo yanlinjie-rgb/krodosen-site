@@ -1,14 +1,11 @@
 /* ============================================================
  *  KRODOSEN · CMS config
- *  mode = 'local'  → 数据存在本浏览器 localStorage（零配置，立即可用）
- *  mode = 'cloud'  → 数据存 Supabase（填好 url / anon key 后切换）
- *  注意：adminPassword 是明文，仅用于前端轻量门禁，不是安全边界。
- *        正式上线请改用 Supabase Auth（见 supabase-krodosen.sql 注释）。
+ *  mode = 'local' → 数据仅存本浏览器（离线可用，适合试用）
+ *  mode = 'api'   → Cloudflare Worker + D1（正式模式，跨设备共享）
  * ============================================================ */
 window.KRD_CMS = {
-  mode: 'local',                 // 'local' | 'cloud'
-  supabaseUrl: '',               // 例：https://xxxx.supabase.co
-  supabaseKey: '',               // Supabase anon / publishable key
-  adminPassword: 'krodosen2026', // 后台登录密码（请自行修改）
+  mode: 'api',                        // 'local' | 'api'
+  apiBase: 'https://api.krodosen.com', // Worker 地址
+  adminPassword: 'krodosen2026',      // 后台登录密码（Worker 端 secret 同名）
   brand: 'KRODOSEN'
 };

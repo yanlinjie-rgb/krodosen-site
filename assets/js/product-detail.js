@@ -38,6 +38,13 @@
     return fallback != null ? fallback : key;
   }
 
+  var _STATUS = {
+    stock: { cls: 'pill--ok', key: 'pd.stock', fb: 'In stock' },
+    build: { cls: 'pill--build', key: 'pd.build', fb: 'Build to order' },
+    eol:   { cls: 'pill--eol',  key: 'pd.eol',   fb: 'Discontinued' }
+  };
+  function statusMeta(s) { return _STATUS[s] || _STATUS.stock; }
+
   function el(sel, root) { return (root || document).querySelector(sel); }
   function els(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   function setText(sel, txt) { els(sel).forEach(function (n) { n.textContent = txt; }); }
@@ -105,13 +112,14 @@
     setText('[data-pd-key]', product.key);
     setText('[data-pd-pkg]', product.pkg);
     setText('[data-pd-tagcat]', product.pill);
-    setText('[data-pd-tagstatus]', product.status === 'stock' ? t('pd.stock', 'In stock') : t('pd.build', 'Build to order'));
+    var _st = statusMeta(product.status);
+    setText('[data-pd-tagstatus]', t(_st.key, _st.fb));
 
     var stTag = el('[data-pd-tagstatus]');
     if (stTag) {
-      stTag.className = 'pill' + (product.status === 'stock' ? ' pill--ok' : '');
+      stTag.className = 'pill ' + _st.cls;
     }
-    setText('[data-pd-status]', product.status === 'stock' ? t('pd.stock', 'In stock') : t('pd.build', 'Build to order'));
+    setText('[data-pd-status]', t(_st.key, _st.fb));
 
     /* description / blurb */
     var blurb = el('[data-pd-blurb]');

@@ -1061,3 +1061,26 @@ li{ list-style:none; }
   .tabs{ flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px; }
   .tab{ white-space:nowrap; }
 }
+/* ---------- vision block with executive portrait ---------- */
+.split--vision{ grid-template-columns:0.78fr 1.22fr; align-items:center; gap:56px; }
+.vision__fig{ margin:0; position:relative; }
+.vision__fig img{
+  display:block; width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 22%;
+  border:1px solid var(--line); background:var(--paper-2); filter:saturate(.96);
+}
+.vision__fig figcaption{ margin-top:16px; display:flex; flex-direction:column; gap:4px; }
+.vision__fig figcaption b{ font-size:13.5px; color:var(--ink); }
+.vision__fig figcaption span{ font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); }
+.vision__ph{ display:none; }
+.vision__fig.is-empty img{ display:none; }
+.vision__fig.is-empty .vision__ph{
+  display:flex; align-items:center; justify-content:center;
+  width:100%; aspect-ratio:4/5; border:1px dashed var(--line);
+  background:linear-gradient(160deg,#F3F4F7 0%,#E9EBF1 100%);
+}
+.vision__ph span{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2); }
+.vision__txt .quote{ margin-top:34px; }
+@media (max-width:980px){
+  .split--vision{ grid-template-columns:1fr; gap:34px; }
+  .vision__fig{ max-width:340px; }
+}

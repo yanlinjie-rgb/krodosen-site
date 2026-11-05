@@ -32,6 +32,17 @@
     return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
   }
   var toastTimer = null;
+  function guard(err) {
+    var msg = String(err && err.message || err);
+    if (msg.indexOf('401') > -1 || msg.toLowerCase().indexOf('unauthor') > -1) {
+      toast('登录已过期，请重新登录', true);
+      if (S && S.logout) S.logout();
+      setTimeout(function () { location.reload(); }, 1200);
+      return true;
+    }
+    return false;
+  }
+
   function toast(msg, isErr) {
     var t = $('#toast');
     if (!t) {
@@ -47,7 +58,10 @@
   }
 
   /* ---------------- auth ---------------- */
-  function login(pw) { return pw === (CFG.adminPassword || 'krodosen2026'); }
+  function login(pw) {
+    if (S && S.login) return S.login(pw);
+    return Promise.resolve(String(pw) === String(CFG.adminPassword || 'krodosen2026'));
+  }
 
   function showApp() {
     $('#loginView').hidden = true;
@@ -57,19 +71,25 @@
 
   $('#loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    if (login($('#loginPw').value)) {
-      try { sessionStorage.setItem('krd_admin', '1'); } catch (err) {}
-      showApp();
-    } else {
-      var m = $('#loginMsg');
-      m.hidden = false;
-      m.textContent = '密码不正确，请重试。';
-      $('#loginPw').value = '';
-      $('#loginPw').focus();
-    }
+    var btn = $('#loginForm button[type=submit]');
+    if (btn) { btn.disabled = true; btn.textContent = '登录中…'; }
+    Promise.resolve(login($('#loginPw').value)).then(function (ok) {
+      if (btn) { btn.disabled = false; btn.textContent = '登 录'; }
+      if (ok) {
+        try { sessionStorage.setItem('krd_admin', '1'); } catch (err) {}
+        showApp();
+      } else {
+        var m = $('#loginMsg');
+        m.hidden = false;
+        m.textContent = '密码不正确，请重试。';
+        $('#loginPw').value = '';
+        $('#loginPw').focus();
+      }
+    });
   });
 
   $('#logoutBtn').addEventListener('click', function () {
+    if (S && S.logout) S.logout();
     try { sessionStorage.removeItem('krd_admin'); } catch (e) {}
     location.reload();
   });
@@ -350,7 +370,7 @@
       closeProduct();
       loadProducts();
     }).catch(function (err) {
-      toast('保存失败：' + err.message, true);
+      if (!guard(err)) toast('保存失败：' + err.message, true);
     });
   });
 
@@ -553,7 +573,7 @@
     var badge = $('[data-mode-badge]');
     if (badge) {
       var cloud = S.isCloud();
-      badge.textContent = cloud ? '云端模式 Supabase' : '本地模式 localStorage';
+      badge.textContent = cloud ? '云端模式 · Cloudflare D1' : '本地模式 · localStorage';
       badge.className = 'mode' + (cloud ? ' is-cloud' : '');
     }
 
@@ -582,5 +602,6 @@
   /* auto-login within the same browser session */
   var authed = false;
   try { authed = sessionStorage.getItem('krd_admin') === '1'; } catch (e) {}
+  if (S && S.isApi && S.isApi()) authed = authed && S.hasSession();
   if (authed) showApp();
 })();

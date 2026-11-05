@@ -442,6 +442,8 @@ window.KRD_I18N = {
     "ab.app5.t": "Medical & new energy",
     "ab.app5.list": "<div class='speclist'><div>Wearable health monitors, medical imaging</div><div>PV inverters &amp; energy storage</div></div>",
     "ad.v.p": "KRODOSEN embraces \"Innovation drives the future\" as its core philosophy, and is committed to becoming a world-leading supplier of electronic components and semiconductors. We will continue to leverage our core strength in automotive connectors and keep expanding our product lines, delivering high-quality solutions to industrial, consumer-electronics and automotive industries.",
+    "ad.v.ceo.name": "KRODOSEN leadership",
+    "ad.v.ceo.role": "Chief Executive Officer",
     "ad.v.people": "We regard our people as our most precious asset. We have always treated our employees as a most precious asset, and will continue to provide a stage where young and capable talent can fully realise their potential — so that our people and our company grow into something new and more valuable together.",
 
     /* ---------- news page ---------- */
@@ -936,6 +938,8 @@ window.KRD_I18N = {
     "ab.app5.t": "醫療與新能源",
     "ab.app5.list": "<div class='speclist'><div>可穿戴健康監測設備與醫療影像系統</div><div>光伏逆變器與儲能系統</div></div>",
     "ad.v.p": "KRODOSEN 秉承「創新驅動未來」的核心理念，致力於成為全球領先的電子元器件與半導體供應商。公司將持續發揮在汽車連接器領域的核心優勢，並不斷拓展產品線，為工業、消費電子與汽車等多個行業提供高品質的解決方案。",
+    "ad.v.ceo.name": "KRODOSEN 經營團隊",
+    "ad.v.ceo.role": "執行長",
     "ad.v.people": "我們把人視為非常珍貴的財產。我們一直把員工視為非常珍貴的財產。今後，也會繼續為年輕有能力的人才，提供能夠充分發揮自身才能的舞台，促使他們的價值得到充分的體現，從而使企業自身也同樣成為嶄新的、更有價值的企業。",
 
     "nd.crumb": "最新消息",

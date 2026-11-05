@@ -14,7 +14,8 @@
     view: 'products',
     products: [], prodQ: '', prodCat: 'all', prodPage: 1,
     editing: null, imgData: '',
-    content: {}, inq: [], inqQ: '', inqCur: null
+    content: {}, inq: [], inqQ: '', inqCur: null,
+    articles: [], artQ: '', artEditing: null
   };
 
   /* ---------------- utils ---------------- */
@@ -98,19 +99,21 @@
   var TITLES = {
     products: ['产品管理', '新增、编辑、删除产品；前台按每页 10 条分页展示。'],
     content: ['页面装修', '直接改写网站上的标题与说明文案，支持英文 / 繁体中文。'],
-    inquiries: ['询盘消息', '来自网站联系表单的客户询盘。']
+    inquiries: ['询盘消息', '来自网站联系表单的客户询盘。'],
+    articles: ['文章管理', '新增、编辑、删除新闻与公告；发布后自动出现在网站新闻页。']
   };
 
   function switchView(v) {
     state.view = v;
     $$('.side__link').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-view') === v); });
-    ['products', 'content', 'inquiries'].forEach(function (k) {
+    ['products', 'content', 'articles', 'inquiries'].forEach(function (k) {
       $('#view-' + k).hidden = k !== v;
     });
     $('#viewTitle').textContent = TITLES[v][0];
     $('#viewSub').textContent = TITLES[v][1];
     if (v === 'products') loadProducts();
     if (v === 'content') loadContent();
+    if (v === 'articles') loadArticles();
     if (v === 'inquiries') loadInquiries();
   }
 
@@ -156,15 +159,16 @@
 
     $('#prodEmpty').hidden = list.length > 0;
     $('#prodRows').innerHTML = slice.map(function (p) {
-      var st = p.status === 'build'
-        ? '<span class="tag tag--build">按单</span>'
-        : '<span class="tag tag--ok">现货</span>';
+      var st = p.status === 'eol'
+        ? '<span class="tag tag--eol">停产</span>'
+        : (p.status === 'build'
+            ? '<span class="tag tag--build">订货</span>'
+            : '<span class="tag tag--ok">现货</span>');
       return '<tr data-id="' + esc(p.id) + '">' +
         '<td><div class="thumb"><img src="' + esc(p.img || 'img/art-chip.svg') + '" alt="" loading="lazy"></div></td>' +
         '<td><span class="mdl">' + esc(p.model) + '</span></td>' +
         '<td>' + esc(catName(p)) + '<span class="sub">' + esc(p.kind || '—') + '</span></td>' +
         '<td>' + esc(p.pkg || '—') + '</td>' +
-        '<td><span class="price">' + (p.price ? esc(p.price) : '—') + '</span></td>' +
         '<td>' + st + '</td>' +
         '<td class="ro">' + fmtDate(p.updated) + '</td>' +
         '<td><div class="acts">' +
@@ -192,6 +196,11 @@
       '<button class="pager__b" data-page="' + (state.prodPage + 1) + '"' + (state.prodPage === pages ? ' disabled' : '') + '>›</button>' +
       '</div>';
   }
+
+  $('#addProd').addEventListener('click', function () {
+    closeProduct();
+    openProduct(null);
+  });
 
   $('#prodSearch').addEventListener('input', function (e) {
     state.prodQ = e.target.value.trim();
@@ -355,7 +364,7 @@
       kind: kindDef ? kindDef.name : '',
       pkg: $('#pPkg').value.trim(),
       price: $('#pPrice').value.trim(),
-      status: $('#pStatus').value,
+      status: ['stock', 'build', 'eol'].indexOf($('#pStatus').value) > -1 ? $('#pStatus').value : 'stock',
       key: $('#pKey').value.trim(),
       specs: specs,
       specRaw: specRaw,
@@ -377,6 +386,114 @@
   $('#prodClose').addEventListener('click', closeProduct);
   $('#prodCancel').addEventListener('click', closeProduct);
   $('#prodModal').addEventListener('click', function (e) { if (e.target.id === 'prodModal') closeProduct(); });
+
+  /* ============================================================
+   *  ARTICLES
+   * ============================================================ */
+  function fmtDay(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    if (isNaN(d)) return iso;
+    var p = function (n) { return n < 10 ? '0' + n : n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+
+  function loadArticles() {
+    S.articles.list().then(function (rows) {
+      state.articles = rows || [];
+      renderArticles();
+      var b = $('[data-badge-articles]');
+      if (b) b.textContent = state.articles.length || '';
+      $('#viewSub').textContent = TITLES.articles[1] + '　共 ' + state.articles.length + ' 篇';
+    }).catch(function (err) {
+      if (!guard(err)) toast('读取文章失败：' + err.message, true);
+    });
+  }
+
+  function renderArticles() {
+    var q = state.artQ.toLowerCase();
+    var list = state.articles.filter(function (x) {
+      if (!q) return true;
+      return [x.titleEn, x.titleZh, x.category, x.bodyEn, x.bodyZh].join(' ').toLowerCase().indexOf(q) > -1;
+    });
+    $('#artEmpty').hidden = list.length > 0;
+    $('#artRows').innerHTML = list.map(function (x) {
+      var st = x.published
+        ? '<span class="tag tag--ok">已发布</span>'
+        : '<span class="tag tag--eol">草稿</span>';
+      return '<tr data-id="' + esc(x.id) + '">' +
+        '<td><span class="mdl">' + esc(x.titleEn || x.titleZh || '（无标题）') + '</span>' +
+          (x.titleZh ? '<span class="sub">' + esc(x.titleZh) + '</span>' : '') + '</td>' +
+        '<td>' + esc(x.category || '—') + '</td>' +
+        '<td class="ro">' + esc(fmtDay(x.publishedAt || x.created)) + '</td>' +
+        '<td>' + st + '</td>' +
+        '<td><div class="acts">' +
+          '<button class="btn btn--sm" data-art-edit="' + esc(x.id) + '">编辑</button>' +
+          '<button class="btn btn--sm btn--danger" data-art-del="' + esc(x.id) + '">删除</button>' +
+        '</div></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function openArticle(id) {
+    var x = id ? state.articles.find(function (v) { return v.id === id; }) : null;
+    state.artEditing = x || null;
+    $('#artModalTitle').textContent = x ? '编辑文章' : '新增文章';
+    $('#aTitleEn').value = x ? (x.titleEn || '') : '';
+    $('#aTitleZh').value = x ? (x.titleZh || '') : '';
+    $('#aExcEn').value = x ? (x.excerptEn || '') : '';
+    $('#aExcZh').value = x ? (x.excerptZh || '') : '';
+    $('#aBodyEn').value = x ? (x.bodyEn || '') : '';
+    $('#aBodyZh').value = x ? (x.bodyZh || '') : '';
+    $('#aCat').value = x ? (x.category || 'Product') : 'Product';
+    $('#aDate').value = fmtDay(x ? (x.publishedAt || x.created) : new Date().toISOString()).replace('—', '');
+    if (!x) $('#aDate').value = fmtDay(new Date().toISOString());
+    $('#aPub').checked = x ? !!x.published : true;
+    $('#artModal').hidden = false;
+    $('#aTitleEn').focus();
+  }
+  function closeArticle() { $('#artModal').hidden = true; state.artEditing = null; }
+
+  $('#addArt').addEventListener('click', function () { closeArticle(); openArticle(null); });
+  $('#artSearch').addEventListener('input', function (e) {
+    state.artQ = e.target.value.trim();
+    renderArticles();
+  });
+  $('#artRows').addEventListener('click', function (e) {
+    var ed = e.target.closest('[data-art-edit]');
+    var del = e.target.closest('[data-art-del]');
+    if (ed) openArticle(ed.getAttribute('data-art-edit'));
+    if (del) {
+      var id = del.getAttribute('data-art-del');
+      if (!confirm('确定删除这篇文章？')) return;
+      S.articles.remove(id).then(function () { toast('已删除'); loadArticles(); })
+        .catch(function (err) { if (!guard(err)) toast('删除失败：' + err.message, true); });
+    }
+  });
+  $('#artSave').addEventListener('click', function () {
+    var tEn = $('#aTitleEn').value.trim();
+    var tZh = $('#aTitleZh').value.trim();
+    if (!tEn && !tZh) { toast('请至少填写一个标题', true); return; }
+    var rec = {
+      id: state.artEditing ? state.artEditing.id : undefined,
+      titleEn: tEn, titleZh: tZh,
+      excerptEn: $('#aExcEn').value.trim(), excerptZh: $('#aExcZh').value.trim(),
+      bodyEn: $('#aBodyEn').value, bodyZh: $('#aBodyZh').value,
+      category: $('#aCat').value,
+      published: $('#aPub').checked,
+      publishedAt: $('#aDate').value ? new Date($('#aDate').value + 'T09:00:00').toISOString() : undefined
+    };
+    S.articles.save(rec).then(function () {
+      toast(state.artEditing ? '已保存修改' : '已发布文章');
+      closeArticle();
+      loadArticles();
+    }).catch(function (err) {
+      if (!guard(err)) toast('保存失败：' + err.message, true);
+    });
+  });
+  $('#artClose').addEventListener('click', closeArticle);
+  $('#artCancel').addEventListener('click', closeArticle);
+  $('#artModal').addEventListener('click', function (e) { if (e.target.id === 'artModal') closeArticle(); });
 
   /* ============================================================
    *  PAGE CONTENT (装修)
@@ -589,12 +706,18 @@
     });
 
     var u = new URLSearchParams(location.search).get('view');
-    switchView(['products','content','inquiries'].indexOf(u) > -1 ? u : 'products');
+    S.articles.list().then(function (rows) {
+      var b = $('[data-badge-articles]');
+      if (b) b.textContent = (rows || []).length || '';
+    }).catch(function () {});
+
+    switchView(['products','content','articles','inquiries'].indexOf(u) > -1 ? u : 'products');
   }
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       if (!$('#prodModal').hidden) closeProduct();
+      if (!$('#artModal').hidden) closeArticle();
       if (!$('#inqModal').hidden) $('#inqModal').hidden = true;
     }
   });

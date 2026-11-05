@@ -507,6 +507,7 @@ window.KRD_I18N = {
     "cd.f.agree": "I agree that my information may be used to respond to this enquiry.",
     "cd.f.submit": "Submit enquiry",
     "cd.f.ok": "Thank you. Your enquiry has been prepared — your email client will open so you can send it.",
+    "cd.f.sent": "Thank you — your enquiry has been received. Our team will reply within one business day.",
     "cd.f.err": "Please complete the required fields and accept the privacy consent.",
     "cd.map.h": "Where we are"
   },
@@ -1002,6 +1003,7 @@ window.KRD_I18N = {
     "cd.f.agree": "我同意 KRODOSEN 使用我的資料回覆本次詢問。",
     "cd.f.submit": "送出詢問",
     "cd.f.ok": "感謝您。詢問內容已準備完成，系統將開啟您的郵件軟體以便寄出。",
+    "cd.f.sent": "感謝您的來信，我們已收到詢盤，將於一個工作天內回覆。",
     "cd.f.err": "請填寫必填欄位並勾選隱私同意。",
     "cd.map.h": "我們的據點"
   }

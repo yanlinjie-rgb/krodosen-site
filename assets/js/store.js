@@ -152,6 +152,31 @@
     }
   };
 
+  /* ---------------- articles ---------------- */
+  var K_ARTICLES = 'krd_articles';
+  var Articles = {
+    list: function () {
+      if (CLOUD) return api('/api/articles', { auth: true }).then(function (j) { return j.articles || []; });
+      return Promise.resolve(lsGet(K_ARTICLES, []));
+    },
+    save: function (a) {
+      a.updated = new Date().toISOString();
+      if (CLOUD) return api('/api/articles', { method: 'POST', body: a, auth: true }).then(function (j) { a.id = j.id || a.id; return a; });
+      var all = lsGet(K_ARTICLES, []);
+      a.id = a.id || uid();
+      a.created = a.created || a.updated;
+      var i = all.findIndex(function (x) { return x.id === a.id; });
+      if (i >= 0) all[i] = a; else all.unshift(a);
+      lsSet(K_ARTICLES, all);
+      return Promise.resolve(a);
+    },
+    remove: function (id) {
+      if (CLOUD) return api('/api/articles/' + encodeURIComponent(id), { method: 'DELETE', auth: true }).then(function () { return true; });
+      lsSet(K_ARTICLES, lsGet(K_ARTICLES, []).filter(function (x) { return x.id !== id; }));
+      return Promise.resolve(true);
+    }
+  };
+
   /* ---------------- auth (api mode) ---------------- */
   function login(pw) {
     if (!CLOUD) return Promise.resolve(String(pw) === String(CFG.adminPassword || 'krodosen2026'));
@@ -175,6 +200,7 @@
     products: Products,
     content: Content,
     inquiries: Inquiries,
+    articles: Articles,
     login: login,
     logout: logout,
     hasSession: hasSession

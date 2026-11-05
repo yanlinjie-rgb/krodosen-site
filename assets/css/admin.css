@@ -198,3 +198,5 @@ code{font-family:var(--mono); background:#F1F2F5; padding:1px 5px; border-radius
   .main{padding:18px 16px 50px;}
   .grid2,.citem__row{grid-template-columns:1fr;}
 }
+/* hidden 属性优先于 display 声明（修复 .modal/.pager 等覆盖 hidden 的问题） */
+[hidden]{display:none !important;}

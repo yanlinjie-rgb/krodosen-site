@@ -102,8 +102,10 @@
       return Promise.resolve(true);
     },
     /* synchronous read (local mode only) — lets detail pages resolve instantly */
+    /* read-only: never seeds, so public visitors are not polluted */
     sync: function () {
-      return CLOUD ? null : seedProducts();
+      if (CLOUD) return null;
+      return lsGet(K_PRODUCTS, null) || (window.KRD_PRODUCTS || []);
     },
     reset: function () {
       localStorage.removeItem(K_PRODUCTS);

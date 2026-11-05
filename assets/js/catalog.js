@@ -30,6 +30,18 @@
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
+
+  /* ---------- 产品状态：现货 / 订货 / 停产 ---------- */
+  var STATUS = {
+    stock: { cls: 'pill--ok', key: 'pd.stock', fb: 'In stock' },
+    build: { cls: 'pill--build', key: 'pd.build', fb: 'Build to order' },
+    eol:   { cls: 'pill--eol',  key: 'pd.eol',   fb: 'Discontinued' }
+  };
+  function statusMeta(s) { return STATUS[s] || STATUS.stock; }
+  function statusBadge(s) {
+    var m = statusMeta(s);
+    return '<span class="pill ' + m.cls + '">' + esc(t(m.key, m.fb)) + '</span>';
+  }
   function $(sel, root) { return (root || document).querySelector(sel); }
 
   var catLabel = function (c) { return lang() === 'zh-Hant' ? c.name : c.nameEn; };
@@ -187,7 +199,7 @@
           (p.kind ? '<div class="psub">' + esc(p.kind) + '</div>' : '') + '</td>' +
         '<td class="pkey">' + esc(p.key || '—') + '</td>' +
         '<td>' + esc(p.pkg || '—') + '</td>' +
-        '<td>' + (p.price ? esc(p.price) : '<span class="pmuted">—</span>') + '</td>' +
+        '<td>' + statusBadge(p.status) + '</td>' +
         '<td>' + (p.ds
           ? '<a class="dl" href="' + esc(p.ds) + '" target="_blank" rel="noopener"><span data-i18n="common.datasheet">Datasheet</span></a>'
           : '<span class="pmuted">—</span>') + '</td>' +

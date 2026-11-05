@@ -21,6 +21,13 @@
   /* ---------------- utils ---------------- */
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  /* 安全绑定：元素不存在时静默跳过（避免旧缓存 HTML 配新 JS 时整页崩溃） */
+  function on(sel, ev, fn) {
+    var e = $(sel);
+    if (!e) { console.warn('[admin] missing element:', sel); return null; }
+    e.addEventListener(ev, fn);
+    return e;
+  }
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -70,7 +77,7 @@
     bootApp();
   }
 
-  $('#loginForm').addEventListener('submit', function (e) {
+  on('#loginForm', 'submit', function (e) {
     e.preventDefault();
     var btn = $('#loginForm button[type=submit]');
     if (btn) { btn.disabled = true; btn.textContent = '登录中…'; }
@@ -89,7 +96,7 @@
     });
   });
 
-  $('#logoutBtn').addEventListener('click', function () {
+  on('#logoutBtn', 'click', function () {
     if (S && S.logout) S.logout();
     try { sessionStorage.removeItem('krd_admin'); } catch (e) {}
     location.reload();
@@ -107,10 +114,12 @@
     state.view = v;
     $$('.side__link').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-view') === v); });
     ['products', 'content', 'articles', 'inquiries'].forEach(function (k) {
-      $('#view-' + k).hidden = k !== v;
+      var el = $('#view-' + k);
+      if (el) el.hidden = k !== v;
     });
-    $('#viewTitle').textContent = TITLES[v][0];
-    $('#viewSub').textContent = TITLES[v][1];
+    var tt = $('#viewTitle'), ss = $('#viewSub');
+    if (tt) tt.textContent = TITLES[v][0];
+    if (ss) ss.textContent = TITLES[v][1];
     if (v === 'products') loadProducts();
     if (v === 'content') loadContent();
     if (v === 'articles') loadArticles();
@@ -144,7 +153,8 @@
     S.products.list().then(function (rows) {
       state.products = rows || [];
       renderProducts();
-      $('#viewSub').textContent = TITLES.products[1] + '　共 ' + state.products.length + ' 条';
+      var sub = $('#viewSub');
+      if (sub) sub.textContent = TITLES.products[1] + '　共 ' + state.products.length + ' 条';
       var badge = $('[data-badge-products]');
       if (badge) badge.textContent = state.products.length;
     });
@@ -157,6 +167,7 @@
     var start = (state.prodPage - 1) * PAGE;
     var slice = list.slice(start, start + PAGE);
 
+    if (!$('#prodRows')) return;
     $('#prodEmpty').hidden = list.length > 0;
     $('#prodRows').innerHTML = slice.map(function (p) {
       var st = p.status === 'eol'
@@ -181,6 +192,7 @@
     /* pager */
     var total = list.length;
     var host = $('#prodPager');
+    if (!host) return;
     if (pages <= 1) { host.innerHTML = ''; return; }
     var btns = '';
     for (var i = 1; i <= pages; i++) {
@@ -197,23 +209,23 @@
       '</div>';
   }
 
-  $('#addProd').addEventListener('click', function () {
+  on('#addProd', 'click', function () {
     closeProduct();
     openProduct(null);
   });
 
-  $('#prodSearch').addEventListener('input', function (e) {
+  on('#prodSearch', 'input', function (e) {
     state.prodQ = e.target.value.trim();
     state.prodPage = 1;
     renderProducts();
   });
-  $('#prodCat').addEventListener('change', function (e) {
+  on('#prodCat', 'change', function (e) {
     state.prodCat = e.target.value;
     state.prodPage = 1;
     renderProducts();
   });
 
-  $('#prodPager').addEventListener('click', function (e) {
+  on('#prodPager', 'click', function (e) {
     var b = e.target.closest('[data-page]');
     if (!b || b.disabled) return;
     state.prodPage = parseInt(b.getAttribute('data-page'), 10);
@@ -221,7 +233,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  $('#prodRows').addEventListener('click', function (e) {
+  on('#prodRows', 'click', function (e) {
     var ed = e.target.closest('[data-edit]');
     var del = e.target.closest('[data-del]');
     if (ed) openProduct(ed.getAttribute('data-edit'));
@@ -235,7 +247,7 @@
     }
   });
 
-  $('#resetProds').addEventListener('click', function () {
+  on('#resetProds', 'click', function () {
     if (!confirm('将清空本地修改，恢复为初始示例数据（147 条）。确定吗？')) return;
     S.products.reset().then(function () {
       toast('已重置为示例数据');
@@ -246,9 +258,8 @@
   /* ---------- product modal ---------- */
   function fillCatSelect() {
     var opts = CATS.map(function (c) { return '<option value="' + esc(c.id) + '">' + esc(c.nameEn + ' · ' + c.name) + '</option>'; }).join('');
-    $('#pCat').innerHTML = opts;
-    var sel = '<option value="all">全部分类</option>' + opts;
-    $('#prodCat').innerHTML = sel;
+    if ($('#pCat')) $('#pCat').innerHTML = opts;
+    if ($('#prodCat')) $('#prodCat').innerHTML = '<option value="all">全部分类</option>' + opts;
   }
 
   function fillKindSelect(catId, value) {
@@ -270,6 +281,7 @@
   function renderSpecHelp() {
     var k = currentKindDef();
     var keys = k ? k.filters.map(function (f) { return f.key; }) : [];
+    if (!$('#pSpecsHelp')) return;
     $('#pSpecsHelp').textContent = keys.length
       ? '可用参数键：' + keys.slice(0, 12).join(' / ') + (keys.length > 12 ? ' …' : '')
       : '该子类型没有预置筛选项，可自由填写参数键。';
@@ -298,11 +310,12 @@
     }
     $('#pSpecs').value = lines;
 
+    if (!$('#prodModal')) { toast('页面版本过旧，请强制刷新（Ctrl + Shift + F5）', true); return; }
     $('#prodModal').hidden = false;
     $('#pModel').focus();
   }
 
-  function closeProduct() { $('#prodModal').hidden = true; state.editing = null; state.imgData = ''; }
+  function closeProduct() { if ($('#prodModal')) $('#prodModal').hidden = true; state.editing = null; state.imgData = ''; }
 
   function updatePreview(src) {
     var img = $('#pPreview');
@@ -311,10 +324,10 @@
     else { img.removeAttribute('src'); img.style.display = 'none'; tip.textContent = '未选择图片（默认使用分类示意图）'; }
   }
 
-  $('#pCat').addEventListener('change', function () { fillKindSelect($('#pCat').value, ''); });
-  $('#pKind').addEventListener('change', renderSpecHelp);
+  on('#pCat', 'change', function () { fillKindSelect($('#pCat').value, ''); });
+  on('#pKind', 'change', renderSpecHelp);
 
-  $('#pImage').addEventListener('change', function (e) {
+  on('#pImage', 'change', function (e) {
     var f = e.target.files && e.target.files[0];
     if (!f) return;
     var reader = new FileReader();
@@ -335,7 +348,7 @@
     reader.readAsDataURL(f);
   });
 
-  $('#prodSave').addEventListener('click', function () {
+  on('#prodSave', 'click', function () {
     var model = $('#pModel').value.trim();
     if (!model) { toast('请填写型号', true); return; }
     if (!state.editing && state.products.some(function (p) { return p.model === model; })) {
@@ -383,9 +396,9 @@
     });
   });
 
-  $('#prodClose').addEventListener('click', closeProduct);
-  $('#prodCancel').addEventListener('click', closeProduct);
-  $('#prodModal').addEventListener('click', function (e) { if (e.target.id === 'prodModal') closeProduct(); });
+  on('#prodClose', 'click', closeProduct);
+  on('#prodCancel', 'click', closeProduct);
+  on('#prodModal', 'click', function (e) { if (e.target.id === 'prodModal') closeProduct(); });
 
   /* ============================================================
    *  ARTICLES
@@ -404,7 +417,8 @@
       renderArticles();
       var b = $('[data-badge-articles]');
       if (b) b.textContent = state.articles.length || '';
-      $('#viewSub').textContent = TITLES.articles[1] + '　共 ' + state.articles.length + ' 篇';
+      var sub2 = $('#viewSub');
+      if (sub2) sub2.textContent = TITLES.articles[1] + '　共 ' + state.articles.length + ' 篇';
     }).catch(function (err) {
       if (!guard(err)) toast('读取文章失败：' + err.message, true);
     });
@@ -416,6 +430,7 @@
       if (!q) return true;
       return [x.titleEn, x.titleZh, x.category, x.bodyEn, x.bodyZh].join(' ').toLowerCase().indexOf(q) > -1;
     });
+    if (!$('#artRows')) return;
     $('#artEmpty').hidden = list.length > 0;
     $('#artRows').innerHTML = list.map(function (x) {
       var st = x.published
@@ -449,17 +464,18 @@
     $('#aDate').value = fmtDay(x ? (x.publishedAt || x.created) : new Date().toISOString()).replace('—', '');
     if (!x) $('#aDate').value = fmtDay(new Date().toISOString());
     $('#aPub').checked = x ? !!x.published : true;
+    if (!$('#artModal')) { toast('页面版本过旧，请强制刷新（Ctrl + Shift + F5）', true); return; }
     $('#artModal').hidden = false;
     $('#aTitleEn').focus();
   }
-  function closeArticle() { $('#artModal').hidden = true; state.artEditing = null; }
+  function closeArticle() { if ($('#artModal')) $('#artModal').hidden = true; state.artEditing = null; }
 
-  $('#addArt').addEventListener('click', function () { closeArticle(); openArticle(null); });
-  $('#artSearch').addEventListener('input', function (e) {
+  on('#addArt', 'click', function () { closeArticle(); openArticle(null); });
+  on('#artSearch', 'input', function (e) {
     state.artQ = e.target.value.trim();
     renderArticles();
   });
-  $('#artRows').addEventListener('click', function (e) {
+  on('#artRows', 'click', function (e) {
     var ed = e.target.closest('[data-art-edit]');
     var del = e.target.closest('[data-art-del]');
     if (ed) openArticle(ed.getAttribute('data-art-edit'));
@@ -470,7 +486,7 @@
         .catch(function (err) { if (!guard(err)) toast('删除失败：' + err.message, true); });
     }
   });
-  $('#artSave').addEventListener('click', function () {
+  on('#artSave', 'click', function () {
     var tEn = $('#aTitleEn').value.trim();
     var tZh = $('#aTitleZh').value.trim();
     if (!tEn && !tZh) { toast('请至少填写一个标题', true); return; }
@@ -491,9 +507,9 @@
       if (!guard(err)) toast('保存失败：' + err.message, true);
     });
   });
-  $('#artClose').addEventListener('click', closeArticle);
-  $('#artCancel').addEventListener('click', closeArticle);
-  $('#artModal').addEventListener('click', function (e) { if (e.target.id === 'artModal') closeArticle(); });
+  on('#artClose', 'click', closeArticle);
+  on('#artCancel', 'click', closeArticle);
+  on('#artModal', 'click', function (e) { if (e.target.id === 'artModal') closeArticle(); });
 
   /* ============================================================
    *  PAGE CONTENT (装修)
@@ -559,7 +575,7 @@
     }).join('');
   }
 
-  $('#contentList').addEventListener('click', function (e) {
+  on('#contentList', 'click', function (e) {
     var item = e.target.closest('.citem');
     if (!item) return;
     var key = item.getAttribute('data-key');
@@ -620,12 +636,12 @@
     }).join('');
   }
 
-  $('#inqSearch').addEventListener('input', function (e) {
+  on('#inqSearch', 'input', function (e) {
     state.inqQ = e.target.value.trim();
     renderInquiries();
   });
 
-  $('#inqRows').addEventListener('click', function (e) {
+  on('#inqRows', 'click', function (e) {
     var b = e.target.closest('[data-open]');
     if (!b) return;
     var id = b.getAttribute('data-open');
@@ -651,10 +667,10 @@
     }
   });
 
-  $('#inqClose').addEventListener('click', function () { $('#inqModal').hidden = true; });
-  $('#inqModal').addEventListener('click', function (e) { if (e.target.id === 'inqModal') $('#inqModal').hidden = true; });
+  on('#inqClose', 'click', function () { $('#inqModal').hidden = true; });
+  on('#inqModal', 'click', function (e) { if (e.target.id === 'inqModal') $('#inqModal').hidden = true; });
 
-  $('#inqDelete').addEventListener('click', function () {
+  on('#inqDelete', 'click', function () {
     if (!state.inqCur) return;
     if (!confirm('删除这条询盘？')) return;
     S.inquiries.remove(state.inqCur.id).then(function () {
@@ -664,7 +680,7 @@
     });
   });
 
-  $('#exportInq').addEventListener('click', function () {
+  on('#exportInq', 'click', function () {
     var rows = [['name', 'company', 'email', 'phone', 'subject', 'message', 'createdAt']];
     inqFiltered().forEach(function (m) {
       rows.push([m.name, m.company, m.email, m.phone, m.subject, (m.message || '').replace(/\n/g, ' '), m.createdAt]);
@@ -716,8 +732,9 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (!$('#prodModal').hidden) closeProduct();
-      if (!$('#artModal').hidden) closeArticle();
+      var pm = $('#prodModal'), am = $('#artModal');
+      if (pm && !pm.hidden) closeProduct();
+      if (am && !am.hidden) closeArticle();
       if (!$('#inqModal').hidden) $('#inqModal').hidden = true;
     }
   });

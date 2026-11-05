@@ -1084,3 +1084,27 @@ li{ list-style:none; }
   .split--vision{ grid-template-columns:1fr; gap:34px; }
   .vision__fig{ max-width:340px; }
 }
+/* ---------- catalogue pagination ---------- */
+.pager{
+  display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  margin-top:26px; padding-top:20px; border-top:1px solid var(--line);
+}
+.pager__info{ font-size:11.5px; letter-spacing:.05em; color:var(--muted); }
+.pager__info b{ font-family:var(--mono); font-size:12.5px; color:var(--navy); }
+.pager__info span{ color:var(--muted-2); }
+.pager__ctl{ display:flex; align-items:center; gap:5px; }
+.pager__b{
+  min-width:34px; height:34px; padding:0 9px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--line); background:#fff;
+  font-family:var(--mono); font-size:12px; color:var(--ink-2);
+  cursor:pointer; transition:.18s;
+}
+.pager__b:hover:not(:disabled){ border-color:var(--navy); color:var(--navy); }
+.pager__b.is-on{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:600; }
+.pager__b:disabled{ opacity:.38; cursor:default; }
+.pager__b--nav{ font-size:14px; }
+.pager__gap{ padding:0 2px; color:var(--muted-2); font-size:12px; }
+@media (max-width:600px){
+  .pager{ flex-direction:column; align-items:flex-start; gap:12px; }
+}

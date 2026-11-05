@@ -1108,3 +1108,5 @@ li{ list-style:none; }
 @media (max-width:600px){
   .pager{ flex-direction:column; align-items:flex-start; gap:12px; }
 }
+/* hidden 属性优先于 display 声明（修复 .modal/.pager 等覆盖 hidden 的问题） */
+[hidden]{display:none !important;}

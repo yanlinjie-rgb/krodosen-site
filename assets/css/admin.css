@@ -124,6 +124,7 @@ code{font-family:var(--mono); background:#F1F2F5; padding:1px 5px; border-radius
 .tag{display:inline-block; padding:2px 8px; border:1px solid var(--line); font-size:10.5px; color:var(--muted);}
 .tag--ok{background:var(--okbg); border-color:#D3EBD7; color:var(--ok);}
 .tag--build{background:#FFF8EC; border-color:#F3E0BC; color:#9A6B12;}
+.tag--eol{background:#F5F5F7; border-color:#E2E3E9; color:#8A8F9E;}
 .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--line);}
 .dot.is-new{background:var(--burst);}
 .acts{display:flex; gap:6px;}
@@ -200,3 +201,13 @@ code{font-family:var(--mono); background:#F1F2F5; padding:1px 5px; border-radius
 }
 /* hidden 属性优先于 display 声明（修复 .modal/.pager 等覆盖 hidden 的问题） */
 [hidden]{display:none !important;}
+
+/* ---------- 文章管理 ---------- */
+.modal__in--lg{ width:min(980px,100%); }
+.w-cat{ width:120px; }
+.w-date{ width:130px; }
+.w-state{ width:110px; }
+.chk{ display:flex; align-items:center; gap:9px; margin-top:14px; font-size:12.5px; color:var(--ink2); cursor:pointer; }
+.chk input{ width:15px; height:15px; accent-color:#16183F; }
+.fld__tag{ font-style:normal; font-size:10.5px; color:var(--muted2); margin-left:6px; }
+#view-articles .mdl + .sub{ display:block; margin-top:3px; }

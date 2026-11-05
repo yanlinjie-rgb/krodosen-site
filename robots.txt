@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://krodosen.com/sitemap.xml
+Sitemap: https://www.krodosen.com/sitemap.xml

@@ -1,14 +1,17 @@
 /* ============================================================
  *  KRODOSEN · data layer (products / page content / inquiries)
- *  Local mode  : localStorage, zero setup, works offline.
- *  Cloud mode  : Supabase REST (anon key), enabled by cms-config.js.
- *  Public API  : window.KRD_STORE
+ *  mode = 'local' → localStorage（零配置，仅本浏览器）
+ *  mode = 'api'   → Cloudflare Worker + D1（跨设备共享，正式模式）
+ *  Public API: window.KRD_STORE
  * ============================================================ */
 (function () {
   'use strict';
 
   var CFG = window.KRD_CMS || {};
-  var CLOUD = CFG.mode === 'cloud' && CFG.supabaseUrl && CFG.supabaseKey;
+  var MODE = CFG.mode || 'local';
+  var API = MODE === 'api' && CFG.apiBase ? CFG.apiBase.replace(/\/$/, '') : null;
+  var CLOUD = !!API;
+
   var K_PRODUCTS = 'krd_products';
   var K_CONTENT = 'krd_content';
   var K_INQ = 'krd_inquiries';
@@ -21,26 +24,26 @@
     try { localStorage.setItem(k, JSON.stringify(v)); return true; }
     catch (e) { console.warn('localStorage full', e); return false; }
   }
-  function uid() {
-    return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  function uid() { return 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function token() {
+    try { return sessionStorage.getItem('krd_api_token') || ''; } catch (e) { return ''; }
   }
 
-  function rest(path, opts) {
+  function api(path, opts) {
     opts = opts || {};
-    var url = CFG.supabaseUrl.replace(/\/$/, '') + '/rest/v1/' + path;
-    return fetch(url, {
+    var headers = { 'Accept': 'application/json' };
+    if (opts.body) headers['Content-Type'] = 'application/json';
+    if (opts.auth && token()) headers['Authorization'] = 'Bearer ' + token();
+    return fetch(API + path, {
       method: opts.method || 'GET',
-      headers: Object.assign({
-        'apikey': CFG.supabaseKey,
-        'Authorization': 'Bearer ' + CFG.supabaseKey,
-        'Content-Type': 'application/json',
-        'Prefer': opts.prefer || 'return=representation'
-      }, opts.headers || {}),
+      headers: headers,
       body: opts.body ? JSON.stringify(opts.body) : undefined
     }).then(function (r) {
-      if (!r.ok) return r.text().then(function (t) { throw new Error(r.status + ' ' + t.slice(0, 160)); });
-      var ct = r.headers.get('content-type') || '';
-      return ct.indexOf('json') > -1 ? r.json() : null;
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status));
+        return j;
+      });
     });
   }
 
@@ -50,21 +53,10 @@
     if (existing) return existing;
     var base = (window.KRD_PRODUCTS || []).map(function (p) {
       return {
-        id: p.id,
-        model: p.model || p.id,
-        cat: p.cat,
-        kindKey: p.kindKey || '',
-        kind: p.kind || '',
-        pkg: p.pkg || '',
-        price: p.price || '',
-        status: p.status || 'stock',
-        key: p.key || '',
-        specs: p.specs || [],
-        specRaw: p.specRaw || {},
-        img: p.img || '',
-        ds: p.ds || '',
-        remarks: '',
-        updated: ''
+        id: p.id, model: p.model || p.id, cat: p.cat, kindKey: p.kindKey || '',
+        kind: p.kind || '', pkg: p.pkg || '', price: p.price || '', status: p.status || 'stock',
+        key: p.key || '', specs: p.specs || [], specRaw: p.specRaw || {},
+        img: p.img || '', ds: p.ds || '', remarks: '', updated: ''
       };
     });
     lsSet(K_PRODUCTS, base);
@@ -73,22 +65,13 @@
 
   var Products = {
     list: function () {
-      if (CLOUD) {
-        return rest('products?select=*&order=model.asc').then(function (rows) {
-          return (rows || []).map(fromRow);
-        });
-      }
+      if (CLOUD) return api('/api/products').then(function (j) { return j.products || []; });
       return Promise.resolve(seedProducts());
     },
     save: function (p) {
       p.updated = new Date().toISOString();
-      if (CLOUD) {
-        var row = toRow(p);
-        var exists = !!p._cloudId;
-        var path = exists ? 'products?id=eq.' + encodeURIComponent(p._cloudId) : 'products';
-        return rest(path, { method: exists ? 'PATCH' : 'POST', body: exists ? row : [row] })
-          .then(function () { return p; });
-      }
+      p.id = p.model;
+      if (CLOUD) return api('/api/products', { method: 'POST', body: p, auth: true }).then(function () { return p; });
       var all = seedProducts();
       var i = all.findIndex(function (x) { return x.id === p.id; });
       if (i >= 0) all[i] = p; else all.unshift(p);
@@ -96,66 +79,31 @@
       return Promise.resolve(p);
     },
     remove: function (id) {
-      if (CLOUD) return rest('products?model=eq.' + encodeURIComponent(id), { method: 'DELETE' });
+      if (CLOUD) return api('/api/products/' + encodeURIComponent(id), { method: 'DELETE', auth: true });
       var all = seedProducts().filter(function (x) { return x.id !== id; });
       lsSet(K_PRODUCTS, all);
       return Promise.resolve(true);
     },
-    /* synchronous read (local mode only) — lets detail pages resolve instantly */
-    /* read-only: never seeds, so public visitors are not polluted */
+    /* synchronous read (local mode only) — used for first paint on detail pages */
     sync: function () {
       if (CLOUD) return null;
       return lsGet(K_PRODUCTS, null) || (window.KRD_PRODUCTS || []);
     },
     reset: function () {
+      if (CLOUD) return Promise.resolve([]);
       localStorage.removeItem(K_PRODUCTS);
       return Promise.resolve(seedProducts());
     }
   };
 
-  // cloud row <-> local object（字段与 supabase-krodosen.sql 对齐）
-  function toRow(p) {
-    return {
-      model: p.model, category: p.cat, kind: p.kindKey, kind_name: p.kind,
-      package: p.pkg, price: p.price, status: p.status, key_spec: p.key,
-      specs: p.specs, spec_data: p.specRaw, image_url: p.img,
-      datasheet_url: p.ds, remarks: p.remarks || ''
-    };
-  }
-  function fromRow(r) {
-    return {
-      _cloudId: r.id, id: r.model, model: r.model, cat: r.category, kindKey: r.kind,
-      kind: r.kind_name || r.kind || '', pkg: r.package || '', price: r.price || '',
-      status: r.status || 'stock', key: r.key_spec || '', specs: r.specs || [],
-      specRaw: r.spec_data || {}, img: r.image_url || '', ds: r.datasheet_url || '',
-      remarks: r.remarks || '', updated: r.updated_at || ''
-    };
-  }
-
-  /* ---------------- page content (装修) ---------------- */
+  /* ---------------- page content ---------------- */
   var Content = {
     all: function () {
-      if (CLOUD) {
-        return rest('site_content?select=*').then(function (rows) {
-          var out = {};
-          (rows || []).forEach(function (r) { out[r.key] = r; });
-          return out;
-        });
-      }
-      return Promise.resolve(lsGet(K_CONTENT, {})); // { key: {en, zhHant} }
+      if (CLOUD) return api('/api/content').then(function (j) { return j.content || {}; });
+      return Promise.resolve(lsGet(K_CONTENT, {}));
     },
     set: function (key, lang, value) {
-      if (CLOUD) {
-        return Content.all().then(function (all) {
-          var row = all[key] || { key: key, value_en: '', value_zh: '' };
-          if (lang === 'zh-Hant') row.value_zh = value; else row.value_en = value;
-          return rest('site_content', {
-            method: 'POST',
-            prefer: 'resolution=merge-duplicates,return=representation',
-            body: [{ key: key, value_en: row.value_en || '', value_zh: row.value_zh || '' }]
-          });
-        });
-      }
+      if (CLOUD) return api('/api/content', { method: 'POST', body: { key: key, lang: lang, value: value }, auth: true });
       var all = lsGet(K_CONTENT, {});
       all[key] = all[key] || { en: '', zhHant: '' };
       if (lang === 'zh-Hant') all[key].zhHant = value; else all[key].en = value;
@@ -163,7 +111,7 @@
       return Promise.resolve(true);
     },
     reset: function (key) {
-      if (CLOUD) return rest('site_content?key=eq.' + encodeURIComponent(key), { method: 'DELETE' });
+      if (CLOUD) return api('/api/content?key=' + encodeURIComponent(key), { method: 'DELETE', auth: true });
       var all = lsGet(K_CONTENT, {});
       delete all[key];
       lsSet(K_CONTENT, all);
@@ -174,60 +122,61 @@
   /* ---------------- inquiries ---------------- */
   var Inquiries = {
     list: function () {
-      if (CLOUD) {
-        return rest('inquiries?select=*&order=created_at.desc').then(function (rows) {
-          return (rows || []).map(function (r) {
-            return {
-              id: r.id, name: r.name, company: r.company || '', email: r.email,
-              phone: r.phone || '', subject: r.subject || '', message: r.message || '',
-              lang: r.lang || '', createdAt: r.created_at, read: !!r.is_read, from: 'cloud'
-            };
-          });
-        });
-      }
+      if (CLOUD) return api('/api/inquiries', { auth: true }).then(function (j) { return j.inquiries || []; });
       return Promise.resolve(lsGet(K_INQ, []));
     },
     add: function (data) {
       var rec = {
-        id: uid(), name: data.name || '', company: data.company || '',
-        email: data.email || '', phone: data.phone || '',
-        subject: data.subject || '', message: data.message || '',
+        id: uid(), name: data.name || '', company: data.company || '', email: data.email || '',
+        phone: data.phone || '', subject: data.subject || '', message: data.message || '',
         lang: data.lang || 'en', createdAt: new Date().toISOString(), read: false, from: 'local'
       };
-      if (CLOUD) {
-        return rest('inquiries', {
-          method: 'POST',
-          prefer: 'return=representation',
-          body: [{
-            name: rec.name, company: rec.company, email: rec.email, phone: rec.phone,
-            subject: rec.subject, message: rec.message, lang: rec.lang
-          }]
-        }).then(function () { return rec; });
-      }
+      if (CLOUD) return api('/api/inquiries', { method: 'POST', body: rec }).then(function () { return rec; });
       var all = lsGet(K_INQ, []);
       all.unshift(rec);
       lsSet(K_INQ, all);
       return Promise.resolve(rec);
     },
     markRead: function (id, read) {
-      if (CLOUD) return rest('inquiries?id=eq.' + encodeURIComponent(id), { method: 'PATCH', body: { is_read: !!read } });
+      if (CLOUD) return api('/api/inquiries/' + encodeURIComponent(id), { method: 'PATCH', body: { read: !!read }, auth: true });
       var all = lsGet(K_INQ, []);
       all.forEach(function (x) { if (x.id === id) x.read = !!read; });
       lsSet(K_INQ, all);
       return Promise.resolve(true);
     },
     remove: function (id) {
-      if (CLOUD) return rest('inquiries?id=eq.' + encodeURIComponent(id), { method: 'DELETE' });
+      if (CLOUD) return api('/api/inquiries/' + encodeURIComponent(id), { method: 'DELETE', auth: true });
       var all = lsGet(K_INQ, []).filter(function (x) { return x.id !== id; });
       lsSet(K_INQ, all);
       return Promise.resolve(true);
     }
   };
 
+  /* ---------------- auth (api mode) ---------------- */
+  function login(pw) {
+    if (!CLOUD) return Promise.resolve(String(pw) === String(CFG.adminPassword || 'krodosen2026'));
+    return api('/api/login', { method: 'POST', body: { password: String(pw) } })
+      .then(function (j) {
+        try { sessionStorage.setItem('krd_api_token', j.token); } catch (e) {}
+        return true;
+      })
+      .catch(function () { return false; });
+  }
+  function logout() { try { sessionStorage.removeItem('krd_api_token'); } catch (e) {} }
+  function hasSession() {
+    if (!CLOUD) return true;
+    return !!token();
+  }
+
   window.KRD_STORE = {
-    isCloud: function () { return !!CLOUD; },
+    isCloud: function () { return CLOUD; },
+    isApi: function () { return !!API; },
+    mode: MODE,
     products: Products,
     content: Content,
-    inquiries: Inquiries
+    inquiries: Inquiries,
+    login: login,
+    logout: logout,
+    hasSession: hasSession
   };
 })();

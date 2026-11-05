@@ -206,6 +206,17 @@
 
   render();
 
+  /* 云端模式下用最新数据刷新（后台改过的产品） */
+  try {
+    var ST = window.KRD_STORE;
+    if (ST && ST.isApi && ST.isApi()) {
+      ST.products.list().then(function (rows) {
+        var live = (rows || []).filter(function (x) { return x.id.toLowerCase() === product.id.toLowerCase(); })[0];
+        if (live) { LIST = rows; product = live; render(); }
+      }).catch(function () {});
+    }
+  } catch (e) {}
+
   /* 语言切换后重渲染（app.js 会派发 krd:lang） */
   document.addEventListener('krd:lang', render);
 

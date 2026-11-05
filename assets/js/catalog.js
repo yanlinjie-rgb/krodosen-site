@@ -10,7 +10,8 @@
   var CATS = (window.KRD_CATALOG && window.KRD_CATALOG.categories) || [];
   var ALL = window.KRD_PRODUCTS || [];
 
-  var state = { cat: 'all', kind: '', q: '', filters: {} };
+  var PAGE_SIZE = 10;
+  var state = { cat: 'all', kind: '', q: '', filters: {}, page: 1 };
   var booted = false;
 
   function lang() {
@@ -153,18 +154,28 @@
   function renderRows(list) {
     var body = $('[data-rows]');
     if (!body) return;
+
+    var cnt = $('[data-count-el]');
+    if (cnt) cnt.textContent = list.length;
+
     if (!list.length) {
       body.innerHTML = '';
       var empty = $('[data-empty]');
       if (empty) empty.hidden = false;
-      var cnt = $('[data-count-el]');
-      if (cnt) cnt.textContent = '0';
+      renderPager(0, 0, 0);
       return;
     }
-    var empty = $('[data-empty]');
-    if (empty) empty.hidden = true;
+    var emptyEl = $('[data-empty]');
+    if (emptyEl) emptyEl.hidden = true;
 
-    body.innerHTML = list.map(function (p) {
+    /* --- pagination --- */
+    var pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+    if (state.page > pages) state.page = pages;
+    if (state.page < 1) state.page = 1;
+    var start = (state.page - 1) * PAGE_SIZE;
+    var pageList = list.slice(start, start + PAGE_SIZE);
+
+    body.innerHTML = pageList.map(function (p) {
       var cat = CATS.find(function (c) { return c.id === p.cat; });
       return '<tr data-cat="' + esc(p.cat) + '">' +
         '<td><div class="pncell">' +
@@ -183,8 +194,36 @@
         '</tr>';
     }).join('');
 
-    var cnt = $('[data-count-el]');
-    if (cnt) cnt.textContent = list.length;
+    renderPager(list.length, pages, start);
+  }
+
+  function renderPager(total, pages, start) {
+    var host = $('[data-pager]');
+    if (!host) return;
+    if (pages <= 1) { host.hidden = true; host.innerHTML = ''; return; }
+    host.hidden = false;
+
+    var cur = state.page;
+    var btns = '';
+    for (var p = 1; p <= pages; p++) {
+      if (p === 1 || p === pages || Math.abs(p - cur) <= 1) {
+        btns += '<button type="button" class="pager__b' + (p === cur ? ' is-on' : '') + '" data-page="' + p + '">' + p + '</button>';
+      } else if (Math.abs(p - cur) === 2) {
+        btns += '<span class="pager__gap">…</span>';
+      }
+    }
+
+    var shown = Math.min(PAGE_SIZE, total - start);
+    host.innerHTML =
+      '<div class="pager__info">' +
+        '<b>' + (start + 1) + '–' + (start + shown) + '</b> / ' + total +
+        ' <span>' + esc(t('pd.pagenote', 'part numbers')) + '</span>' +
+      '</div>' +
+      '<div class="pager__ctl">' +
+        '<button type="button" class="pager__b pager__b--nav" data-page="' + (cur - 1) + '"' + (cur === 1 ? ' disabled' : '') + '>‹</button>' +
+        btns +
+        '<button type="button" class="pager__b pager__b--nav" data-page="' + (cur + 1) + '"' + (cur === pages ? ' disabled' : '') + '>›</button>' +
+      '</div>';
   }
 
   function syncUrl() {
@@ -192,6 +231,7 @@
     if (state.cat !== 'all') u.set('cat', state.cat);
     if (state.kind) u.set('kind', state.kind);
     if (state.q) u.set('q', state.q);
+    if (state.page > 1) u.set('page', state.page);
     var s = u.toString();
     history.replaceState(null, '', location.pathname + (s ? '?' + s : ''));
   }
@@ -229,11 +269,22 @@
 
   /* ---------- events ---------- */
   document.addEventListener('click', function (e) {
+    var pg = e.target.closest ? e.target.closest('[data-page]') : null;
+    if (pg) {
+      var n = parseInt(pg.getAttribute('data-page'), 10);
+      if (!isNaN(n) && n !== state.page) {
+        state.page = n;
+        render();
+        var tb = document.querySelector('.ptable');
+        if (tb) tb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
     var el = e.target.closest ? e.target.closest('[data-cat],[data-kind],[data-clear]') : null;
     if (el) {
-      if (el.hasAttribute('data-cat')) { state.cat = el.getAttribute('data-cat'); state.kind = ''; state.filters = {}; }
-      else if (el.hasAttribute('data-kind')) { state.kind = el.getAttribute('data-kind'); state.filters = {}; }
-      else if (el.hasAttribute('data-clear')) { state.filters = {}; }
+      if (el.hasAttribute('data-cat')) { state.cat = el.getAttribute('data-cat'); state.kind = ''; state.filters = {}; state.page = 1; }
+      else if (el.hasAttribute('data-kind')) { state.kind = el.getAttribute('data-kind'); state.filters = {}; state.page = 1; }
+      else if (el.hasAttribute('data-clear')) { state.filters = {}; state.page = 1; }
       render();
       var top = document.querySelector('[data-cat-tabs]');
       if (top && el.hasAttribute('data-cat')) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -250,6 +301,7 @@
     if (cb.checked && i < 0) state.filters[key].push(val);
     if (!cb.checked && i >= 0) state.filters[key].splice(i, 1);
     if (!state.filters[key].length) delete state.filters[key];
+    state.page = 1;
     render();
   });
 
@@ -258,7 +310,7 @@
     if (!e.target.matches || !e.target.matches('[data-q]')) return;
     clearTimeout(timer);
     var v = e.target.value;
-    timer = setTimeout(function () { state.q = v.trim(); render(); }, 180);
+    timer = setTimeout(function () { state.q = v.trim(); state.page = 1; render(); }, 180);
   });
 
   /* ---------- boot ---------- */
@@ -268,6 +320,7 @@
     if (u.get('cat')) state.cat = u.get('cat');
     if (u.get('kind')) state.kind = u.get('kind');
     if (u.get('q')) { state.q = u.get('q'); var inp = $('[data-q]'); if (inp) inp.value = state.q; }
+    if (u.get('page')) { var pn = parseInt(u.get('page'), 10); if (pn > 0) state.page = pn; }
     booted = true;
     render();
     document.addEventListener('krd:lang', render);

@@ -315,6 +315,13 @@
 
   /* ---------- boot ---------- */
   function boot() {
+    var S = window.KRD_STORE;
+    if (S && S.products && S.products.sync) {
+      try {
+        var live = S.products.sync();
+        if (live && live.length) ALL = live;
+      } catch (e) {}
+    }
     if (!ALL.length) return;
     var u = new URLSearchParams(location.search);
     if (u.get('cat')) state.cat = u.get('cat');

@@ -331,6 +331,11 @@
     booted = true;
     render();
     document.addEventListener('krd:lang', render);
+    if (S && S.isApi && S.isApi()) {
+      S.products.list().then(function (rows) {
+        if (rows && rows.length) { ALL = rows; render(); }
+      }).catch(function () {});
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

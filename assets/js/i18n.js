@@ -206,7 +206,7 @@ window.KRD_I18N = {
 
     /* ---------- home : products ---------- */
     "home.p.eyebrow": "Core products",
-    "home.p.h": "Four product lines,<br>one dependable supply chain.",
+    "home.p.h": "Six product lines,<br>one dependable supply chain.",
     "home.p.desc": "From sealed circular connectors to power-management ICs, every KRODOSEN line is qualified for volume production and supported by full traceability.",
     "home.p1.t": "MLCC",
     "home.p1.d": "Multilayer ceramic capacitors with high capacitance density and low ESL for power delivery in automotive, mobile and industrial boards.",
@@ -719,7 +719,7 @@ window.KRD_I18N = {
     "home.scroll": "向下滾動",
 
     "home.p.eyebrow": "核心產品",
-    "home.p.h": "四條產品線，<br>一條可靠的供應鏈。",
+    "home.p.h": "六條產品線，<br>一條可靠的供應鏈。",
     "home.p.desc": "從密封圓形連接器到電源管理 IC，KRODOSEN 每條產品線皆通過量產驗證，並具備完整追溯。",
     "home.p1.t": "MLCC 積層陶瓷電容",
     "home.p1.d": "高電容密度、低 ESL 的多層陶瓷電容，適用於車用、行動裝置與工業電路板的電源傳輸。",

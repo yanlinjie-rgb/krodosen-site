@@ -46,6 +46,16 @@
     return c.kinds.filter(function (k) { return ALL.some(function (p) { return p.cat === c.id && p.kindKey === k.key; }); });
   }
 
+  /* 每个分类一张实拍配图（img/cat/*.jpg，1200x900）；缺图时回退到该分类首个产品图 */
+  var CARD_IMG = {
+    sensor: 'img/cat/sensor.jpg',
+    rf_components: 'img/cat/rf.jpg',
+    power_mgmt: 'img/cat/power.jpg',
+    auto_connector: 'img/cat/auto-conn.jpg',
+    industrial_connector: 'img/cat/ind-conn.jpg',
+    oscillator: 'img/cat/oscillator.jpg'
+  };
+
   // six categories for the homepage grid: the four that carry the brand story + the two biggest sensor/RF lines
   var ORDER = ['sensor', 'rf_components', 'power_mgmt', 'auto_connector', 'industrial_connector', 'oscillator'];
 
@@ -56,12 +66,14 @@
     host.innerHTML = cats.map(function (c, i) {
       var kinds = kindsOf(c);
       var n = countOf(c);
-      var art = (ALL.find(function (p) { return p.cat === c.id; }) || {}).img || 'img/art-chip.svg';
+      var art = CARD_IMG[c.id] || (ALL.find(function (p) { return p.cat === c.id; }) || {}).img || 'img/art-chip.svg';
+      var isPhoto = CARD_IMG[c.id] ? ' width="1200" height="900" decoding="async"' : '';
+      var eager = i === 0 ? '' : ' loading="lazy"';
       var tags = kinds.slice(0, 3).map(function (k) { return '<span>' + esc(k.name) + '</span>'; }).join('');
       return '<a class="pcard" href="products.html?cat=' + encodeURIComponent(c.id) + '">' +
         '<div class="pcard__fig">' +
           '<span class="pcard__idx">' + String(i + 1).padStart(2, '0') + '</span>' +
-          '<img class="art" src="' + esc(art) + '" alt="' + esc(label(c)) + '">' +
+          '<img class="art" src="' + esc(art) + '" alt="' + esc(label(c)) + ' product photography"' + isPhoto + eager + '>' +
           '<span class="pcard__go"><svg viewBox="0 0 16 16" fill="none" stroke="#16183F" stroke-width="1.8"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>' +
         '</div>' +
         '<div class="pcard__body">' +

@@ -220,14 +220,14 @@
           note.textContent = dict['cd.f.sent'] || 'Thank you — your enquiry has been received. Our team will reply within one business day.';
           setTimeout(function () { note.textContent = ''; note.className = 'formnote'; }, 9000);
         }).catch(function () {
-          var href = 'mailto:klein@krodosen.com?subject=' + encodeURIComponent('[KRODOSEN] ' + subject) +
+          var href = 'mailto:zoe@krodosen.com?subject=' + encodeURIComponent('[KRODOSEN] ' + subject) +
             '&body=' + encodeURIComponent(body);
           window.location.href = href;
         });
         return;
       }
 
-      var href = 'mailto:klein@krodosen.com?subject=' +
+      var href = 'mailto:zoe@krodosen.com?subject=' +
         encodeURIComponent('[KRODOSEN] ' + subject) + '&body=' + encodeURIComponent(body);
       setTimeout(function () { window.location.href = href; }, 700);
     });

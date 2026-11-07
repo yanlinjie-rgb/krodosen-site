@@ -97,7 +97,7 @@
       { k: 'x', label: 'X', href: 'https://twitter.com/intent/tweet?url=' + u + '&text=' + txt },
       { k: 'li', label: 'LinkedIn', href: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u },
       { k: 'wa', label: 'WhatsApp', href: 'https://wa.me/?text=' + txt + '%20' + u },
-      { k: 'mail', label: t('pdp.share.mail', 'Email'), href: 'mailto:klein@krodosen.com?subject=' + encodeURIComponent(product.id + ' — datasheet request') + '&body=' + txt + '%0A' + u },
+      { k: 'mail', label: t('pdp.share.mail', 'Email'), href: 'mailto:zoe@krodosen.com?subject=' + encodeURIComponent(product.id + ' — datasheet request') + '&body=' + txt + '%0A' + u },
       { k: 'link', label: t('pdp.share.copy', 'Copy link'), copy: true }
     ];
   }

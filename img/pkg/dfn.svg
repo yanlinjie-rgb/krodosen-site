@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" role="img" aria-label="DFN package outline">
+  <defs>
+    <linearGradient id="dfnBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3A3F96"/><stop offset=".55" stop-color="#232760"/><stop offset="1" stop-color="#141633"/>
+    </linearGradient>
+    <linearGradient id="dfnPin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4F6FA"/><stop offset="1" stop-color="#AEB7C6"/>
+    </linearGradient>
+    <linearGradient id="dfnPad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E2E7EF"/><stop offset="1" stop-color="#9EA8B8"/>
+    </linearGradient>
+    <linearGradient id="dfnSheen" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".16"/><stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dfnHatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#8D97A8" stroke-width="1.1" opacity=".5"/>
+    </pattern>
+    <pattern id="dfnDots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.4" cy="1.4" r="1.4" fill="#D9DDE4"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="480" fill="url(#dfnDots)" opacity=".55"/>
+
+  <g stroke="#C9CFDA" stroke-width="1.4" fill="none" opacity=".9">
+    <path d="M288 196 H140 V96"/>
+    <path d="M288 280 H120 V330"/>
+    <path d="M502 196 H560 V110"/>
+    <path d="M502 280 H548 V336"/>
+  </g>
+  <g fill="#C9CFDA">
+    <circle cx="140" cy="96" r="3"/><circle cx="120" cy="330" r="3"/>
+    <circle cx="560" cy="110" r="3"/><circle cx="548" cy="336" r="3"/>
+  </g>
+
+  <ellipse cx="396" cy="364" rx="150" ry="16" fill="#0F1030" opacity=".07"/>
+
+  <!-- bottom-side leads, flush with the body edge -->
+  <g fill="url(#dfnPin)">
+    <rect x="286" y="174" width="20" height="30" rx="2"/>
+    <rect x="286" y="224" width="20" height="30" rx="2"/>
+    <rect x="286" y="274" width="20" height="30" rx="2"/>
+    <rect x="486" y="174" width="20" height="30" rx="2"/>
+    <rect x="486" y="224" width="20" height="30" rx="2"/>
+    <rect x="486" y="274" width="20" height="30" rx="2"/>
+  </g>
+
+  <!-- body -->
+  <g>
+    <rect x="300" y="152" width="192" height="200" rx="8" fill="url(#dfnBody)"/>
+    <rect x="300" y="152" width="192" height="200" rx="8" fill="url(#dfnSheen)"/>
+    <rect x="300.75" y="152.75" width="190.5" height="198.5" rx="7.4" fill="none" stroke="#4B51A6" stroke-width="1.5" opacity=".7"/>
+    <rect x="324" y="180" width="144" height="144" rx="4" fill="url(#dfnPad)"/>
+    <rect x="324" y="180" width="144" height="144" rx="4" fill="url(#dfnHatch)"/>
+    <rect x="324" y="180" width="144" height="144" rx="4" fill="none" stroke="#7F8999" stroke-width="1" stroke-dasharray="4 3" opacity=".85"/>
+    <circle cx="318" cy="170" r="5.5" fill="#E8501F"/>
+    <text x="396" y="257" fill="#5C6472" font-size="9.5" font-family="ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="1.6">EXPOSED PAD</text>
+  </g>
+
+  <line x1="64" y1="390" x2="188" y2="390" stroke="#E8501F" stroke-width="1.5"/>
+  <g fill="#1E2153" font-family="ui-monospace, Menlo, monospace" font-size="11" letter-spacing="1">
+    <text x="64" y="419">D F N   P A C K A G E</text>
+    <text x="64" y="438" fill="#6B7280" font-size="10.5">Dual flat no-lead · bottom-side pads</text>
+  </g>
+</svg>

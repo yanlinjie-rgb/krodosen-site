@@ -66,14 +66,49 @@
   var mainEl = el('[data-pd-main]');
   var notFoundEl = el('[data-pd-404]');
 
-  if (!product) {
+  /* API 返回的行只有 model，没有 id —— 统一补齐，供匹配与渲染使用 */
+  var _CATS = (window.KRD_CATALOG && window.KRD_CATALOG.categories) || [];
+  function _catEn(id) {
+    var c = _CATS.filter(function (k) { return k.id === id; })[0];
+    return c ? c.nameEn : id;
+  }
+  function normRows(rows) {
+    return (rows || []).map(function (x) {
+      if (!x.id) x.id = x.model;
+      if (!x.pill) x.pill = _catEn(x.cat) + (x.kind ? " · " + x.kind : "");
+      return x;
+    });
+  }
+
+  function showNotFound() {
     if (mainEl) mainEl.hidden = true;
     if (notFoundEl) notFoundEl.hidden = false;
     function nfTitle() { document.title = t('pdp.notfound', 'Part number not found') + ' — KRODOSEN'; }
     nfTitle();
     document.addEventListener('krd:lang', nfTitle);
+  }
+
+  if (!product) {
+    /* 静态目录里没有该型号时，先问云端（后台新增的产品只存在于 D1） */
+    var _ST = window.KRD_STORE;
+    if (_ST && _ST.isApi && _ST.isApi() && qid) {
+      _ST.products.list().then(function (rows) {
+        var norm = normRows(rows);
+        var hit = norm.filter(function (x) {
+          return String(x.id).toLowerCase() === qid.toLowerCase();
+        })[0];
+        if (hit) { LIST = norm; product = hit; start(); }
+        else { showNotFound(); }
+      }).catch(function () { showNotFound(); });
+      return;
+    }
+    showNotFound();
     return;
   }
+
+  function start() {
+    if (mainEl) mainEl.hidden = false;
+    if (notFoundEl) notFoundEl.hidden = true;
 
   /* ---------------- share networks ---------------- */
   var ICONS = {
@@ -219,8 +254,9 @@
     var ST = window.KRD_STORE;
     if (ST && ST.isApi && ST.isApi()) {
       ST.products.list().then(function (rows) {
-        var live = (rows || []).filter(function (x) { return x.id.toLowerCase() === product.id.toLowerCase(); })[0];
-        if (live) { LIST = rows; product = live; render(); }
+        var norm = normRows(rows);
+        var live = norm.filter(function (x) { return String(x.id).toLowerCase() === String(product.id).toLowerCase(); })[0];
+        if (live) { LIST = norm; product = live; render(); }
       }).catch(function () {});
     }
   } catch (e) {}
@@ -297,4 +333,7 @@
     e.preventDefault();
     openDs(b.getAttribute('data-ds'), b.getAttribute('data-ds-name'));
   });
+  }
+
+  start();
 })();

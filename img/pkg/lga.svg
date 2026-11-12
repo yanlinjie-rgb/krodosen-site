@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" role="img" aria-label="LGA package outline">
+  <defs>
+    <linearGradient id="lgaBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3A3F96"/><stop offset=".55" stop-color="#232760"/><stop offset="1" stop-color="#141633"/>
+    </linearGradient>
+    <linearGradient id="lgaPad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E2E7EF"/><stop offset="1" stop-color="#9EA8B8"/>
+    </linearGradient>
+    <linearGradient id="lgaSheen" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".16"/><stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="lgaHatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#8D97A8" stroke-width="1" opacity=".45"/>
+    </pattern>
+    <pattern id="lgaDots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.4" cy="1.4" r="1.4" fill="#D9DDE4"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="480" fill="url(#lgaDots)" opacity=".55"/>
+
+  <g stroke="#C9CFDA" stroke-width="1.4" fill="none" opacity=".9">
+    <path d="M350 155 V80 H196"/>
+    <path d="M300 305 H156 V356"/>
+    <path d="M450 228 H548 V150"/>
+    <path d="M400 305 H522 V352"/>
+  </g>
+  <g fill="#C9CFDA">
+    <circle cx="196" cy="80" r="3"/><circle cx="156" cy="356" r="3"/>
+    <circle cx="548" cy="150" r="3"/><circle cx="522" cy="352" r="3"/>
+  </g>
+
+  <ellipse cx="350" cy="330" rx="140" ry="16" fill="#0F1030" opacity=".07"/>
+
+  <!-- body -->
+  <g>
+    <rect x="250" y="155" width="200" height="150" rx="8" fill="url(#lgaBody)"/>
+    <rect x="250" y="155" width="200" height="150" rx="8" fill="url(#lgaSheen)"/>
+    <rect x="250.75" y="155.75" width="198.5" height="148.5" rx="7.4" fill="none" stroke="#4B51A6" stroke-width="1.5" opacity=".7"/>
+
+    <!-- land pads on the underside, visible through the moulding -->
+    <g>
+      <rect x="267" y="183" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="267" y="183" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <rect x="327" y="183" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="327" y="183" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <rect x="387" y="183" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="387" y="183" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <rect x="267" y="237" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="267" y="237" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <rect x="327" y="237" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="327" y="237" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <rect x="387" y="237" width="46" height="40" rx="4" fill="url(#lgaPad)"/>
+      <rect x="387" y="237" width="46" height="40" rx="4" fill="url(#lgaHatch)"/>
+      <g fill="none" stroke="#7F8999" stroke-width="1" stroke-dasharray="4 3" opacity=".85">
+        <rect x="267" y="183" width="46" height="40" rx="4"/>
+        <rect x="327" y="183" width="46" height="40" rx="4"/>
+        <rect x="387" y="183" width="46" height="40" rx="4"/>
+        <rect x="267" y="237" width="46" height="40" rx="4"/>
+        <rect x="327" y="237" width="46" height="40" rx="4"/>
+        <rect x="387" y="237" width="46" height="40" rx="4"/>
+      </g>
+    </g>
+
+    <circle cx="262" cy="167" r="5.5" fill="#E8501F"/>
+  </g>
+
+  <line x1="64" y1="390" x2="188" y2="390" stroke="#E8501F" stroke-width="1.5"/>
+  <g fill="#1E2153" font-family="ui-monospace, Menlo, monospace" font-size="11" letter-spacing="1">
+    <text x="64" y="419">L G A   P A C K A G E</text>
+    <text x="64" y="438" fill="#6B7280" font-size="10.5">Land grid array · bottom-side pads</text>
+  </g>
+</svg>

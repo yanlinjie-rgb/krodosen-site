@@ -30,6 +30,11 @@
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
+  /* 封装示意图：按 pkg 自动分配（pkg-art.js） */
+  function art(p) {
+    if (window.KRD_ART) return window.KRD_ART(p);
+    return (p && p.img) || 'img/art-chip.svg';
+  }
 
   /* ---------- 产品状态：现货 / 订货 / 停产 ---------- */
   var STATUS = {
@@ -191,8 +196,8 @@
       var cat = CATS.find(function (c) { return c.id === p.cat; });
       return '<tr data-cat="' + esc(p.cat) + '">' +
         '<td><div class="pncell">' +
-          '<button type="button" class="pthumb" data-zoom="' + esc(p.img) + '" data-zoom-alt="' + esc(p.model) + '" aria-label="Enlarge ' + esc(p.model) + '">' +
-            '<img src="' + esc(p.img) + '" alt="" width="40" height="40" loading="lazy" decoding="async"></button>' +
+          '<button type="button" class="pthumb" data-zoom="' + esc(art(p)) + '" data-zoom-alt="' + esc(p.model) + '" aria-label="Enlarge ' + esc(p.model) + '">' +
+            '<img src="' + esc(art(p)) + '" alt="" width="40" height="40" loading="lazy" decoding="async"></button>' +
           '<a class="pnlink" href="product.html?id=' + encodeURIComponent(p.model) + '">' + esc(p.model) + '</a>' +
         '</div></td>' +
         '<td><span class="pill">' + esc(cat ? catLabel(cat) : p.catName) + '</span>' +

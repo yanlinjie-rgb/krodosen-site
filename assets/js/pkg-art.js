@@ -1,7 +1,7 @@
 /* ============================================================
  *  KRODOSEN · package artwork resolver
  *  按产品的封装字段（pkg / package_spec）自动匹配示意图：
- *    SOT / QFN / DFN / SOP(含 SOIC、ESOP、MSOP、TSSOP)
+ *    SOT / QFN / LGA / DFN / SOP(含 SOIC、ESOP、MSOP、TSSOP) / TO(TO-263、TO-220、DPAK)
  *  自定义上传的图片优先保留；无匹配时回退通用芯片图。
  *  window.KRD_PKG_ART(pkg)   -> 图片路径 | null
  *  window.KRD_ART(product)   -> 最终用于渲染的图片路径
@@ -14,6 +14,7 @@
   var RULES = [
     { re: /SOT/i,               file: 'img/pkg/sot.svg' },
     { re: /QFN/i,              file: 'img/pkg/qfn.svg' },
+    { re: /LGA/i,              file: 'img/pkg/lga.svg' },
     { re: /DFN/i,              file: 'img/pkg/dfn.svg' },
     { re: /(SOP|SOIC|MSOP|TSSOP|SSOP)/i, file: 'img/pkg/sop.svg' },
     { re: /(TO-?\d{3}|DPAK|D2PAK)/i,     file: 'img/pkg/to.svg' }

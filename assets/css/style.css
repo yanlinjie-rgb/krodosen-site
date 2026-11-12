@@ -933,7 +933,7 @@ li{ list-style:none; }
 /* related part numbers */
 .pdp__rel{ margin-top:88px; }
 .relgrid{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px;
   background:var(--line); border:1px solid var(--line); margin-top:26px;
 }
 .relcard{ display:flex; align-items:center; gap:13px; padding:20px; background:#fff; transition:background .22s; min-width:0; }

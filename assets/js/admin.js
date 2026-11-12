@@ -176,7 +176,7 @@
             ? '<span class="tag tag--build">订货</span>'
             : '<span class="tag tag--ok">现货</span>');
       return '<tr data-id="' + esc(p.id) + '">' +
-        '<td><div class="thumb"><img src="' + esc(p.img || 'img/art-chip.svg') + '" alt="" loading="lazy"></div></td>' +
+        '<td><div class="thumb"><img src="' + esc(window.KRD_ART ? window.KRD_ART(p) : (p.img || 'img/art-chip.svg')) + '" alt="" loading="lazy"></div></td>' +
         '<td><span class="mdl">' + esc(p.model) + '</span></td>' +
         '<td>' + esc(catName(p)) + '<span class="sub">' + esc(p.kind || '—') + '</span></td>' +
         '<td>' + esc(p.pkg || '—') + '</td>' +

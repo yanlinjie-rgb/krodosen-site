@@ -151,7 +151,7 @@
       if (opts.length < 2) return; // a filter with one value is useless
       var sel = state.filters[d.key] || [];
       html += '<details class="fgroup' + (sel.length ? ' is-on' : '') + '">' +
-        '<summary>' + esc(d.name) + (sel.length ? '<i>' + sel.length + '</i>' : '') + '</summary>' +
+        '<summary>' + esc(t('sp.' + d.name, d.name)) + (sel.length ? '<i>' + sel.length + '</i>' : '') + '</summary>' +
         '<div class="fopts">' +
         opts.map(function (o) {
           var on = sel.indexOf(o.v) >= 0;

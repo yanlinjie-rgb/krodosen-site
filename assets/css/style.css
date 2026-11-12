@@ -901,6 +901,13 @@ li{ list-style:none; }
 
 /* specs + sidebar */
 .pdp__cols{ display:grid; grid-template-columns:1.32fr 1fr; gap:68px; margin-top:84px; align-items:start; }
+
+/* product overview（来源：后台「描述」字段） */
+.pdp__overview{ margin-top:84px; }
+.pdp__overview + .pdp__cols{ margin-top:56px; }
+.pdp__prose{ margin-top:26px; max-width:92ch; font-size:15px; line-height:1.95; color:var(--ink-2); }
+.pdp__prose p{ margin:0 0 15px; }
+.pdp__prose p:last-child{ margin-bottom:0; }
 .pdp__h{
   font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--navy);
   padding-bottom:14px; border-bottom:1px solid var(--ink); margin:0;
@@ -955,6 +962,8 @@ li{ list-style:none; }
   .pdp__grid{ grid-template-columns:1fr; gap:40px; }
   .pdp__media{ position:static; max-width:520px; }
   .pdp__cols{ grid-template-columns:1fr; gap:52px; margin-top:60px; }
+  .pdp__overview{ margin-top:60px; }
+  .pdp__overview + .pdp__cols{ margin-top:44px; }
   .relgrid{ grid-template-columns:1fr 1fr; }
   .lbox{ padding:20px; }
   .dsmodal{ padding:14px; }
@@ -966,6 +975,8 @@ li{ list-style:none; }
   .pdp{ padding:48px 0 72px; }
   .pdp__meta{ grid-template-columns:1fr; }
   .pdp__cols{ margin-top:48px; }
+  .pdp__overview{ margin-top:48px; }
+  .pdp__prose{ font-size:14.5px; line-height:1.9; }
   .relgrid{ grid-template-columns:1fr; }
   .pdp__acts .btn{ flex:1 1 auto; justify-content:center; }
   .dscard{ padding:16px; }

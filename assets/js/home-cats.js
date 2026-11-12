@@ -43,6 +43,11 @@
   function label(c) { return lang() === 'zh-Hant' ? c.name : c.nameEn; }
 
   function countOf(id) { return ALL.filter(function (p) { return p.cat === id; }).length; }
+  /* 分类暂无料号时，不显示 "0 part numbers"，改用「洽询供货」文案 */
+  function countText(id) {
+    var n = countOf(id);
+    return n ? n + ' ' + t('pd.parts', 'part numbers') : t('pd.onrequest', 'Available on request');
+  }
   function kindsOf(c) {
     return c.kinds.filter(function (k) { return ALL.some(function (p) { return p.cat === c.id && p.kindKey === k.key; }); });
   }
@@ -66,7 +71,6 @@
     var cats = ORDER.map(function (id) { return CATS.find(function (c) { return c.id === id; }); }).filter(Boolean);
     host.innerHTML = cats.map(function (c, i) {
       var kinds = kindsOf(c);
-      var n = countOf(c.id);
       var art = CARD_IMG[c.id] || (ALL.find(function (p) { return p.cat === c.id; }) || {}).img || 'img/art-chip.svg';
       var isPhoto = CARD_IMG[c.id] ? ' width="1200" height="900" decoding="async"' : '';
       var eager = i === 0 ? '' : ' loading="lazy"';
@@ -79,7 +83,7 @@
         '</div>' +
         '<div class="pcard__body">' +
           '<h3>' + esc(label(c)) + '</h3>' +
-          '<p>' + kinds.length + ' ' + esc(t('pd.subtypes', 'sub-types')) + ' · ' + n + ' ' + esc(t('pd.parts', 'part numbers')) + '</p>' +
+          '<p>' + kinds.length + ' ' + esc(t('pd.subtypes', 'sub-types')) + ' · ' + esc(countText(c.id)) + '</p>' +
           '<div class="tags">' + tags + '</div>' +
         '</div></a>';
     }).join('');
@@ -94,7 +98,7 @@
       if (!c) return '';
       return '<a class="railcell" href="products.html?cat=' + encodeURIComponent(c.id) + '">' +
         (ICONS[c.id] || '') +
-        '<div><b>' + esc(label(c)) + '</b><small>' + countOf(c) + ' ' + esc(t('pd.parts', 'part numbers')) + '</small></div></a>';
+        '<div><b>' + esc(label(c)) + '</b><small>' + esc(countText(c.id)) + '</small></div></a>';
     }).join('');
   }
 

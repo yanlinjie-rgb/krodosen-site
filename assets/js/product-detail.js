@@ -54,6 +54,12 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  /* 封装示意图：按 pkg 自动分配（pkg-art.js）；上传图优先 */
+  function art(p) {
+    if (window.KRD_ART) return window.KRD_ART(p);
+    return (p && p.img) || 'img/art-chip.svg';
+  }
+
   /* ---------------- resolve product ---------------- */
   var qid = (new URLSearchParams(location.search).get('id') || '').trim();
   var product = null;
@@ -162,14 +168,30 @@
       blurb.textContent = t('pdp.blurb.' + catKey, '') || (product.key + ' · ' + product.pkg);
     }
 
+    /* product overview —— 后台「描述」字段（每段一个 <p>，无内容则整块隐藏） */
+    var ovWrap = el('[data-pd-overview]');
+    var ovBody = el('[data-pd-remarks]');
+    if (ovWrap && ovBody) {
+      var txt = String(product.remarks || product.remark || product.description || '').trim();
+      if (txt) {
+        ovBody.innerHTML = txt.split(/\n+/).map(function (para) {
+          return '<p>' + esc(para.trim()) + '</p>';
+        }).join('');
+        ovWrap.hidden = false;
+      } else {
+        ovBody.innerHTML = '';
+        ovWrap.hidden = true;
+      }
+    }
+
     /* main figure */
     var fig = el('.pdp__fig');
     if (fig) {
-      fig.setAttribute('data-zoom', product.img);
+      fig.setAttribute('data-zoom', art(product));
       fig.setAttribute('data-zoom-alt', product.id);
       var figImg = el('img', fig);
       if (figImg) {
-        figImg.src = product.img;
+        figImg.src = art(product);
         figImg.alt = product.id + ' — ' + product.pill + ' ' + product.pkg;
         figImg.width = 400; figImg.height = 400;
       }
@@ -204,7 +226,7 @@
       }).join('');
     }
 
-    /* features + applications（按类别，1–4 条） */
+    /* features + applications（按类别，1–4 条；无文案时整块隐藏） */
     var featUl = el('[data-pd-features]');
     if (featUl) {
       var feats = [];
@@ -214,6 +236,8 @@
         else if (DICT.en && DICT.en[k] != null) feats.push(DICT.en[k]);
       }
       featUl.innerHTML = feats.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('');
+      var featBlock = featUl.closest('.pdp__side-block');
+      if (featBlock) featBlock.hidden = !feats.length;
     }
 
     var appUl = el('[data-pd-apps]');
@@ -225,6 +249,8 @@
         else if (DICT.en && DICT.en[ak] != null) apps.push(DICT.en[ak]);
       }
       appUl.innerHTML = apps.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('');
+      var appBlock = appUl.closest('.pdp__side-block');
+      if (appBlock) appBlock.hidden = !apps.length;
     }
 
     /* related part numbers（同类别，最多 3 个） */
@@ -233,7 +259,7 @@
       var rel = LIST.filter(function (x) { return x.cat === product.cat && x.id !== product.id; }).slice(0, 3);
       relWrap.innerHTML = rel.map(function (r) {
         return '<a class="relcard" href="product.html?id=' + encodeURIComponent(r.id) + '">' +
-          '<img src="' + esc(r.img) + '" alt="" width="52" height="52" loading="lazy">' +
+          '<img src="' + esc(art(r)) + '" alt="" width="52" height="52" loading="lazy">' +
           '<div class="relcard__body"><div class="relcard__pn">' + esc(r.id) + '</div>' +
           '<div class="relcard__key">' + esc(r.key) + '</div></div></a>';
       }).join('');

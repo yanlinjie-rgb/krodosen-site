@@ -9,6 +9,7 @@
   var DICT = window.KRD_I18N || {};
   var CATS = (window.KRD_CATALOG && window.KRD_CATALOG.categories) || [];
   var ALL = window.KRD_PRODUCTS || [];
+  var S = window.KRD_STORE;
 
   var ICONS = {
     sensor: '<svg viewBox="0 0 24 24" fill="none" stroke="#FF8A5B" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/></svg>',
@@ -65,7 +66,7 @@
     var cats = ORDER.map(function (id) { return CATS.find(function (c) { return c.id === id; }); }).filter(Boolean);
     host.innerHTML = cats.map(function (c, i) {
       var kinds = kindsOf(c);
-      var n = countOf(c);
+      var n = countOf(c.id);
       var art = CARD_IMG[c.id] || (ALL.find(function (p) { return p.cat === c.id; }) || {}).img || 'img/art-chip.svg';
       var isPhoto = CARD_IMG[c.id] ? ' width="1200" height="900" decoding="async"' : '';
       var eager = i === 0 ? '' : ' loading="lazy"';
@@ -99,7 +100,15 @@
 
   function render() { renderGrid(); renderRail(); }
 
-  function boot() { if (!CATS.length) return; render(); document.addEventListener('krd:lang', render); }
+  /* 云端模式下用 D1 的产品重新计算分类数量（后台新增的产品也能计入） */
+  function refreshFromApi() {
+    if (!S || !S.isApi || !S.isApi()) return;
+    S.products.list().then(function (rows) {
+      if (rows && rows.length) { ALL = rows; render(); }
+    }).catch(function () {});
+  }
+
+  function boot() { if (!CATS.length) return; render(); document.addEventListener('krd:lang', render); refreshFromApi(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

@@ -197,13 +197,15 @@
       }
     }
 
-    /* datasheet */
+    /* datasheet —— 没有 PDF 的料号整块隐藏，避免点了空白 */
     var dsName = product.id + '.pdf';
     setText('[data-pd-dsname]', dsName);
     var dl = el('[data-pd-download]');
     if (dl) { dl.href = product.ds; dl.setAttribute('download', dsName); }
     var pv = el('[data-ds-preview]');
     if (pv) { pv.setAttribute('data-ds', product.ds); pv.setAttribute('data-ds-name', dsName); }
+    var dsCard = el('.dscard');
+    if (dsCard) dsCard.hidden = !product.ds;
 
     /* share bar */
     var shareWrap = el('[data-pd-share]');

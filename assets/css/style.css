@@ -512,6 +512,8 @@ li{ list-style:none; }
 .search svg{ position:absolute; left:15px; top:14px; width:16px; height:16px; color:var(--muted-2); }
 
 .ptable{ width:100%; border-collapse:collapse; }
+/* 全部料号都没有规格书时，整列收起（catalog.js 自动判断） */
+body.no-doc-col [data-doc-col]{ display:none !important; }
 .ptable thead th{
   text-align:left; font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
   color:var(--muted-2); padding:0 18px 14px; border-bottom:1px solid var(--ink);

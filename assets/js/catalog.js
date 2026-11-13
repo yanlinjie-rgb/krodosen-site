@@ -205,7 +205,7 @@
         '<td class="pkey">' + esc(p.key || '—') + '</td>' +
         '<td>' + esc(p.pkg || '—') + '</td>' +
         '<td>' + statusBadge(p.status) + '</td>' +
-        '<td>' + (p.ds
+        '<td data-doc-col>' + (p.ds
           ? '<a class="dl" href="' + esc(p.ds) + '" target="_blank" rel="noopener"><span data-i18n="common.datasheet">Datasheet</span></a>'
           : '<span class="pmuted">—</span>') + '</td>' +
         '</tr>';
@@ -272,8 +272,15 @@
     }).join('');
   }
 
+  /* 全部料号都没有手册时，把 Datasheet 整列收起来 */
+  function syncDocCol() {
+    var has = ALL.some(function (p) { return p.ds && String(p.ds).trim(); });
+    document.body.classList.toggle('no-doc-col', !has);
+  }
+
   function render() {
     if (!booted) return;
+    syncDocCol();
     renderTabs();
     renderKinds();
     var scope = scopeProducts();

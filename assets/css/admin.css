@@ -211,3 +211,93 @@ code{font-family:var(--mono); background:#F1F2F5; padding:1px 5px; border-radius
 .chk input{ width:15px; height:15px; accent-color:#16183F; }
 .fld__tag{ font-style:normal; font-size:10.5px; color:var(--muted2); margin-left:6px; }
 #view-articles .mdl + .sub{ display:block; margin-top:3px; }
+
+/* ---------- 访问统计 ---------- */
+.seg{ display:inline-flex; border:1px solid var(--line); background:#fff; }
+.seg button{
+  height:34px; padding:0 14px; border:0; background:transparent; cursor:pointer;
+  font-size:12.5px; font-weight:600; color:var(--muted); border-right:1px solid var(--line);
+  transition:.16s var(--ease);
+}
+.seg button:last-child{ border-right:0; }
+.seg button:hover{ color:var(--navy); }
+.seg button.is-on{ background:var(--navy); color:#fff; }
+
+.kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.kpi{
+  background:#fff; border:1px solid var(--line); padding:16px 18px 14px;
+  display:flex; align-items:baseline; gap:6px; flex-wrap:wrap;
+}
+.kpi span{ flex:1 0 100%; font-size:11.5px; color:var(--muted); letter-spacing:.04em; }
+.kpi b{ font-family:var(--mono); font-size:26px; line-height:1.1; color:var(--navy); font-weight:700; }
+.kpi em{ font-style:normal; font-size:11.5px; color:var(--muted2); }
+
+.panel{ background:#fff; border:1px solid var(--line); padding:18px 20px 16px; margin-bottom:16px; }
+.panel h3{
+  margin:0 0 16px; font-size:11px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--navy); padding-bottom:12px; border-bottom:1px solid var(--ink);
+}
+.panel h3 small{ font-weight:400; letter-spacing:0; text-transform:none; color:var(--muted2); font-size:11px; }
+
+.panels2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.panels2 .panel{ margin-bottom:0; }
+
+/* 趋势柱状图 */
+.chart{ display:flex; align-items:flex-end; gap:2px; height:196px; padding-top:18px; }
+.cbar{ flex:1 1 0; display:flex; flex-direction:column; justify-content:flex-end; align-items:center;
+  height:100%; position:relative; min-width:0; }
+.cbar i{ display:block; width:100%; max-width:44px; background:var(--burst); border-radius:1px 1px 0 0;
+  transition:height .3s var(--ease), background .16s; }
+.cbar.is-zero i{ background:#E7E9EF; }
+.cbar:hover i{ background:var(--navy); }
+.cbar b{
+  position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+  font-family:var(--mono); font-size:10px; color:var(--muted); font-weight:600;
+  opacity:0; transition:.16s;
+}
+.cbar:hover b{ opacity:1; }
+.cbar span{
+  display:block; margin-top:7px; font-family:var(--mono); font-size:9.5px; color:var(--muted2);
+  white-space:nowrap; height:12px;
+}
+.chart__empty{ display:block; width:100%; text-align:center; padding:34px 0; font-style:normal;
+  font-size:12px; color:var(--muted2); }
+
+/* 排行榜 */
+.rk + .rk{ margin-top:13px; }
+.rk__top{ display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.rk__l{ flex:1 1 auto; font-size:12.5px; color:var(--ink2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rk__tag{ font-style:normal; font-size:10px; padding:1px 6px; background:var(--paper); border:1px solid var(--line); color:var(--muted); white-space:nowrap; }
+.rk__n{ font-family:var(--mono); font-size:12px; color:var(--navy); font-weight:600; white-space:nowrap; }
+.rk__bar{ height:5px; background:var(--paper); overflow:hidden; }
+.rk__bar i{ display:block; height:100%; background:linear-gradient(90deg,#F0A818,var(--burst)); }
+.rk__sub{ margin-top:4px; font-size:11px; color:var(--muted2); }
+
+/* 来源标签 */
+.rtag{ display:inline-block; font-size:10px; padding:1px 6px; border-radius:2px; white-space:nowrap;
+  background:#EEF0F5; color:var(--ink2); }
+.rtag--search{ background:#EAF1FE; color:#1B4FA8; }
+.rtag--social{ background:#FDF0E8; color:#A2451A; }
+.rtag--referral{ background:#F1ECFB; color:#5A3B99; }
+.rtag--direct{ background:#EEF0F5; color:#4A5060; }
+.rtag--internal{ background:#EDF6EE; color:#2C7A3C; }
+
+/* 最近访问表 */
+.tbl--visit td{ font-size:12.5px; }
+.tbl--visit .mono{ font-family:var(--mono); font-size:11.5px; color:var(--muted); white-space:nowrap; }
+.w-time{ width:96px; }
+.w-ref{ width:190px; }
+.w-geo{ width:180px; }
+.w-dev{ width:70px; }
+.w-ip{ width:120px; }
+
+@media(max-width:1080px){
+  .kpis{ grid-template-columns:1fr 1fr; }
+  .panels2{ grid-template-columns:1fr; }
+}
+@media(max-width:600px){
+  .kpis{ grid-template-columns:1fr 1fr; gap:8px; }
+  .kpi b{ font-size:20px; }
+  .chart{ height:150px; }
+  .w-ref,.w-geo,.w-ip{ width:auto; }
+}

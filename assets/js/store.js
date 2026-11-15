@@ -193,10 +193,17 @@
     return !!token();
   }
 
+  /* ---------------- traffic stats ---------------- */
+  function stats(days) {
+    if (!CLOUD) return Promise.reject(new Error('本地模式没有访问数据'));
+    return api('/api/stats?days=' + encodeURIComponent(days || 7), { auth: true });
+  }
+
   window.KRD_STORE = {
     isCloud: function () { return CLOUD; },
     isApi: function () { return !!API; },
     mode: MODE,
+    stats: stats,
     products: Products,
     content: Content,
     inquiries: Inquiries,

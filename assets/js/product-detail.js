@@ -165,7 +165,7 @@
     /* description / blurb */
     var blurb = el('[data-pd-blurb]');
     if (blurb) {
-      blurb.textContent = t('pdp.blurb.' + catKey, '') || (product.key + ' · ' + product.pkg);
+      blurb.textContent = t('pdp.blurb.' + catKey, '') || (product.key || (product.pkg + ' · ' + product.pill));
     }
 
     /* product overview —— 后台「描述」字段（每段一个 <p>，无内容则整块隐藏） */

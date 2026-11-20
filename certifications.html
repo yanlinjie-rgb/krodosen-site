@@ -22,17 +22,12 @@ html,body{overflow-x:hidden}
 
 /* 产品认证卡片 */
 .cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.ccard{display:block;width:100%;padding:0;border:1px solid var(--line);background:#fff;text-align:left;
-  cursor:zoom-in;transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
-.ccard:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(10,12,24,.45)}
+.ccard{display:block;width:100%;border:1px solid var(--line);background:#fff;
+  transition:border-color .25s var(--ease)}
+.ccard:hover{border-color:#B9BECD}
 .ccard__fig{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:var(--paper-2);border-bottom:1px solid var(--line)}
 .ccard__fig img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;padding:10px;
-  transition:transform .5s var(--ease-out)}
-.ccard:hover .ccard__fig img{transform:scale(1.02)}
-.ccard__zoom{position:absolute;right:10px;bottom:10px;width:30px;height:30px;display:grid;place-items:center;
-  background:rgba(10,12,24,.72);color:#fff;opacity:0;transition:opacity .25s var(--ease)}
-.ccard:hover .ccard__zoom{opacity:1}
-.ccard__zoom svg{width:15px;height:15px}
+}
 .ccard__meta{display:block;padding:16px 16px 18px}
 .ccard__meta b{display:block;font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 .ccard__meta span{display:block;margin-top:5px;font-size:12.5px;color:var(--muted);line-height:1.5}
@@ -62,18 +57,6 @@ html,body{overflow-x:hidden}
 .nos--2col{grid-template-columns:1fr 1fr}
 .nos--2col li b{flex-basis:82px}
 
-/* 灯箱 */
-.clb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:32px;
-  background:rgba(8,9,18,.9);backdrop-filter:blur(4px);animation:clbIn .22s var(--ease)}
-.clb[hidden]{display:none}
-@keyframes clbIn{from{opacity:0}to{opacity:1}}
-.clb figure{margin:0;max-width:min(92vw,820px);max-height:92vh;display:flex;flex-direction:column;align-items:center;gap:14px}
-.clb img{max-width:100%;max-height:82vh;display:block;box-shadow:0 30px 80px -30px rgba(0,0,0,.8);background:#fff}
-.clb figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62)}
-.clb__x{position:absolute;top:20px;right:24px;width:42px;height:42px;border:1px solid rgba(255,255,255,.28);
-  background:transparent;color:#fff;font-size:24px;line-height:1;cursor:pointer;transition:.2s var(--ease)}
-.clb__x:hover{background:#fff;color:var(--ink);border-color:#fff}
-
 @media(max-width:1024px){
   .cgrid{grid-template-columns:1fr 1fr;gap:18px}
   .syscard,.syscard--flip{grid-template-columns:1fr}
@@ -88,7 +71,6 @@ html,body{overflow-x:hidden}
   .cstats>div{border-right:0;padding-top:0}
   .cstats b{font-size:26px}
   .nos--2col{grid-template-columns:1fr}
-  .clb{padding:16px}
 }
 </style>
 </head>
@@ -170,81 +152,75 @@ html,body{overflow-x:hidden}
       <div class="rv">
         <span class="eyebrow" data-i18n="cr.p.eyebrow">Product Certification</span>
         <h2 class="h-lg" data-i18n="cr.p.h">Plant-level product certifications</h2>
-        <p class="sec__desc" data-i18n="cr.p.d">Certificates are issued by KFQ in Korea and UTAC in Europe and Vietnam, and audited against the automotive quality standard at each manufacturing site. Select any certificate to view it in full.</p>
+        <p class="sec__desc" data-i18n="cr.p.d">Certificates are issued by KFQ in Korea and UTAC in Europe and Vietnam, and audited against the automotive quality standard at each manufacturing site.</p>
       </div>
     </div>
     <div class="cgrid">
-      <button class="ccard" data-img="img/cert/iatf-hwaseong.webp" data-cap="IATF 16949:2016 — Hwaseong Plant">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/iatf-hwaseong.webp" alt="IATF 16949:2016 certificate — Hwaseong plant" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c1.t">IATF 16949:2016 — Hwaseong Plant</b>
           <span data-i18n="cr.c1.s">Design and production of connector parts, Korea</span>
           <em>KFQ · IATF 0462312</em>
         </span>
-      </button>
+      </div>
 
-      <button class="ccard" data-img="img/cert/iatf-vietnam.webp" data-cap="IATF 16949:2016 — Vietnam Plant">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/iatf-vietnam.webp" alt="IATF 16949:2016 certificate — Vietnam plant" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c2.t">IATF 16949:2016 — Vietnam Plant</b>
           <span data-i18n="cr.c2.s">Design and production of connector and wiring harness, Thai Nguyen</span>
           <em>UTAC · IATF 0424512</em>
         </span>
-      </button>
+      </div>
 
-      <button class="ccard" data-img="img/cert/iatf-poland.webp" data-cap="IATF 16949:2016 — Poland Plant">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/iatf-poland.webp" alt="IATF 16949:2016 certificate — Poland plant" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c3.t">IATF 16949:2016 — Poland Plant</b>
           <span data-i18n="cr.c3.s">Design and production of connector, module and wiring harness, Zabrze</span>
           <em>UTAC CERAM · IATF 0381991</em>
         </span>
-      </button>
+      </div>
 
-      <button class="ccard" data-img="img/cert/iso14001.webp" data-cap="ISO 14001:2015 — Environmental Management">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/iso14001.webp" alt="ISO 14001:2015 certificate" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c4.t">ISO 14001:2015 — Environment</b>
           <span data-i18n="cr.c4.s">Environmental management system, head office and six sites</span>
           <em>KFQ · EAC-039770</em>
         </span>
-      </button>
+      </div>
 
-      <button class="ccard" data-img="img/cert/iso45001.webp" data-cap="ISO 45001:2018 — Occupational Health &amp; Safety">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/iso45001.webp" alt="ISO 45001:2018 certificate" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c5.t">ISO 45001:2018 — Health &amp; Safety</b>
           <span data-i18n="cr.c5.s">Occupational health and safety management system</span>
           <em>KFQ · SAC-0577700</em>
         </span>
-      </button>
+      </div>
 
-      <button class="ccard" data-img="img/cert/sq-cert.webp" data-cap="Hyundai Motor SQ Certificate — Grade S">
+      <div class="ccard">
         <span class="ccard__fig">
           <img src="img/cert/sq-cert.webp" alt="Hyundai Motor supplier quality certificate" loading="lazy">
-          <span class="ccard__zoom"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5L18 18M9 6.5v5M6.5 9h5"/></svg></span>
         </span>
         <span class="ccard__meta">
           <b data-i18n="cr.c6.t">HYUNDAI SQ Certificate</b>
           <span data-i18n="cr.c6.s">Supplier quality certification, injection moulding — grade S</span>
           <em>Hyundai Motor · PL003</em>
         </span>
-      </button>
+      </div>
     </div>
   </div>
 </section>
@@ -385,36 +361,10 @@ html,body{overflow-x:hidden}
   </div>
 </footer>
 
-<div class="clb" id="clb" hidden>
-  <button class="clb__x" aria-label="Close">&times;</button>
-  <figure><img id="clbImg" alt=""><figcaption id="clbCap"></figcaption></figure>
-</div>
-
 <script src="assets/js/i18n.js?v=20261120a"></script>
 <script src="assets/js/cms-config.js?v=20261120a"></script>
 <script src="assets/js/store.js?v=20261120a"></script>
 <script src="assets/js/app.js?v=20261120a"></script>
 <script src="assets/js/track.js?v=20261120a"></script>
-<script>
-(function () {
-  var clb = document.getElementById('clb');
-  var img = document.getElementById('clbImg');
-  var cap = document.getElementById('clbCap');
-  if (!clb) return;
-  function close() { clb.hidden = true; document.body.style.overflow = ''; }
-  document.querySelectorAll('.ccard').forEach(function (b) {
-    b.addEventListener('click', function () {
-      img.src = b.getAttribute('data-img');
-      cap.textContent = b.getAttribute('data-cap') || '';
-      clb.hidden = false;
-      document.body.style.overflow = 'hidden';
-    });
-  });
-  clb.addEventListener('click', function (e) {
-    if (e.target === clb || e.target.closest('.clb__x')) close();
-  });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-})();
-</script>
 </body>
 </html>

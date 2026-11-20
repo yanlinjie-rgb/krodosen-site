@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="assets/css/style.css?v=20261120a">
 <style>
 /* ---------- 认证页 ---------- */
+html,body{overflow-x:hidden}
 .cstats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.16);margin-top:52px}
 .cstats>div{padding:24px 0 0;border-right:1px solid rgba(255,255,255,.16)}
 .cstats>div:last-child{border-right:0}
@@ -55,7 +56,7 @@
 
 /* 认证编号表 */
 .nos{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
-.nos li{display:flex;gap:14px;align-items:baseline;background:#fff;padding:9px 12px;font-size:12.5px}
+.nos li{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;background:#fff;padding:9px 12px;font-size:12.5px}
 .nos li b{flex:0 0 96px;font-weight:600;color:var(--ink-2)}
 .nos li span{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.01em}
 .nos--2col{grid-template-columns:1fr 1fr}
@@ -81,6 +82,8 @@
 }
 @media(max-width:640px){
   .cgrid{grid-template-columns:1fr;gap:16px}
+  .nos li b{flex-basis:100%}
+  .nos li span{word-break:break-word}
   .cstats{grid-template-columns:1fr;border-top:0;margin-top:36px;gap:18px}
   .cstats>div{border-right:0;padding-top:0}
   .cstats b{font-size:26px}
@@ -170,7 +173,7 @@
         <p class="sec__desc" data-i18n="cr.p.d">Certificates are issued by KFQ in Korea and UTAC in Europe and Vietnam, and audited against the automotive quality standard at each manufacturing site. Select any certificate to view it in full.</p>
       </div>
     </div>
-    <div class="cgrid rv">
+    <div class="cgrid">
       <button class="ccard" data-img="img/cert/iatf-hwaseong.webp" data-cap="IATF 16949:2016 — Hwaseong Plant">
         <span class="ccard__fig">
           <img src="img/cert/iatf-hwaseong.webp" alt="IATF 16949:2016 certificate — Hwaseong plant" loading="lazy">
@@ -292,7 +295,7 @@
 
       <div class="syscard rv">
         <div class="syscard__fig" style="padding:24px 30px">
-          <img src="img/cert/marks-strip.webp" alt="UL, CSA, TÜV and VDE marks" loading="lazy" style="max-width:420px">
+          <img src="img/cert/marks-strip.webp" alt="UL, CSA, TÜV and VDE marks" loading="lazy" style="max-width:min(420px,100%)">
         </div>
         <div class="syscard__body" style="padding-top:30px;padding-bottom:30px">
           <span class="tag" data-i18n="cr.k3.tag">Combined approvals</span>
